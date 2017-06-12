@@ -1,0 +1,242 @@
+<html>
+   <head>
+	  <title>Game-for delta</title>
+   </head>
+   <body>
+   <canvas id = "canvas" height = "400" width = "400"></canvas>
+
+   <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        var ctx = null;
+        var gameMap = [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+	0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
+	0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+];
+        var tileH = 40;//tile height and width set to 40px
+        var tileW = 40;
+        var mapH = 20; //number of tiles
+        var mapW = 20; 
+        var currentSecond = 0, frameCount = 0, framesLastSecond = 0; var lastFrameTime = 0;
+        var player = new Character();
+        var brick = new Image;
+        brick.src = "http://www.clker.com/cliparts/b/m/0/m/n/D/brick-wall-jail.svg";
+        var player_Pic = new Image;
+        player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
+        
+        var keysDown = {
+        	37: false,//left arrow
+        	38: false,//up arrow
+        	39: false,//right arrow
+        	40: false//down arrow
+        };
+
+        var viewport = {//creating a viewport object
+        	screen:     [0,0],//dimensions of the canvas width and height
+        	startTile:  [0,0],//the top left tile from which the canvas is starting
+            endTile:    [0,0],//the bottom right tile at which the canvs finishes
+            offSet:     [0,0],//the pixels by which we draw relative position with respect to which we will draw the canvas
+
+            update:  function(px,py){
+            	this.offSet[0] = Math.floor((this.screen[0]/2)-px);//set new offsets according to the px and py value
+            	this.offSet[1] = Math.floor((this.screen[1]/2)-py);
+
+
+            	var tile = [
+            		Math.floor(px/tileW),
+            		Math.floor(py/tileH)
+            	];
+
+
+            	this.startTile[0] = tile[0] - 1 -Math.ceil((this.screen[0]/2)/tileW);
+            	this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2)/tileH);
+
+            	if(this.startTile[0]<0){this.startTile[0]=0;}
+            	if(this.startTile[1]<0){this.startTile[1]=0;}
+
+            	this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2)/tileW);
+            	this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[1]/2)/tileH);
+
+            	if(this.endTile[0]>=mapW){this.endTile[0] = mapW;}
+            	if(this.endTile[1]>=mapW){this.endTile[1] = mapH;}
+
+            },
+
+        }
+
+        function Character(){//class that gives all the information about the character or player's movement and position
+         	this.tileFrom = [1,1];//position of the tile the character is moving from
+         	this.tileTo = [1,1];//position of the tile it is moving to
+         	this.timeMoved = 0; //time since it started moving
+         	this.dimension = [30,30];//dimension of the character 
+         	this.position = [45,45];//absolute position of the character
+         	this.delay = 700; //700ms delay
+         }
+
+            Character.prototype.placeAt = function(x,y)
+            {//method to place the function to x,y position
+            	this.tileFrom = [x,y];
+            	this.tileTo = [x,y];
+            	this.position[0] = x*tileW + ((tileW-this.dimension[0])/2);
+            	this.position[1] = y*tileH + ((tileH-this.dimension[1])/2);
+            };
+
+            Character.prototype.processMovement = function(t)
+            {
+            	if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]){   
+            	                                                  //since the character has already moved to it's destination file 
+            		return false;
+            	}
+            	if(t-this.timeMoved>=this.delay){
+            	    this.placeAt(this.tileTo[0],this.tileTo[1]);
+            	}
+
+            	else{
+            		this.position[0] = tileW*this.tileFrom[0] + ((tileW-this.dimension[0])/2);
+            		this.position[1] = tileW*this.tileFrom[1] + ((tileW-this.dimension[1])/2);
+            	
+
+            	        if(this.tileTo[0]!=this.tileFrom[0]){
+            		        var diff = (tileW/this.delay)*(t-this.timeMoved);
+            		        this.position[0] += (this.tileTo[0]<this.tileFrom[0]) ? 0-diff:diff;
+            		             }
+
+                    	if(this.tileTo[1]!=this.tileFrom[1]){
+                    		var diff = (tileH/this.delay)*(t-this.timeMoved);
+            		        this.position[1] += (this.tileTo[1]<this.tileFrom[1]) ? 0-diff:diff;
+            		             }	     
+            		this.position[0] = Math.round(this.position[0]);
+            		this.position[1] = Math.round(this.position[1]);
+
+            	}
+            		     
+                return true;
+
+            }
+
+            function toIndex(x,y){
+            	return (x+(y*mapW));
+            }
+
+
+    
+        window.onload = function(){
+            ctx = canvas.getContext("2d");
+        	requestAnimationFrame(drawGame);
+        	ctx.font = "bold 10pt sans-serif";
+
+        	window.addEventListener("keyup",function(e){
+              if(e.keyCode>=37&&e.keyCode<=40){
+              	keysDown[e.keyCode] = false;
+              }
+        	});
+        	window.addEventListener("keydown",function(e){
+              if(e.keyCode>=37&&e.keyCode<=40){
+              	keysDown[e.keyCode] = true;
+              }
+        	});
+
+        	viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
+        };  
+
+
+        function drawGame(){  
+
+                   
+              if(ctx==null){
+              
+              	return;
+              }
+                var currentFrameTime = Date.now();
+                var timeElapsed = currentFrameTime - lastFrameTime;   
+                var sec = Math.floor(Date.now()/1000);
+              if(currentSecond!=sec){
+              	currentSecond = sec;
+              	framesLastSecond = frameCount;
+              	frameCount = 1
+              }
+              else{
+              	frameCount++;
+              }
+
+              if(!player.processMovement(currentFrameTime)){
+
+              	// *We check for 3 conditions before moving the character to a tile
+              	//* if the right key is pressed, if it's position is not out of bounds and if the new position is ascessable 
+
+                if(keysDown[37]&&player.tileFrom[0]>0&&gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
+                	player.tileTo[0] -= 1;//to move to the left
+                  }
+                else if(keysDown[38]&&player.tileFrom[1]>0&&gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
+                    player.tileTo[1] -= 1;//to move up
+                  }
+                else if(keysDown[39]&&player.tileFrom[0]<(mapW-1)&&gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==1){
+                    player.tileTo[0] += 1;//to move to the right
+                  }
+                else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)&&gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==1){
+                    player.tileTo[1] += 1;// to move down
+                   }
+
+                if(player.tileTo[0]!=player.tileFrom[0]||player.tileFrom[1]!=player.tileTo[0]){
+                       player.timeMoved = currentFrameTime;
+                   }
+
+                  } 
+                  viewport.update(player.position[0]+(player.dimension[0]/2),player.position[1]+(player.dimension[1]/2));   
+                  ctx.fillStyle = "#000000";
+                  ctx.fillRect(0,0,viewport.screen[0],viewport.screen[1]);
+
+
+
+              for(var y = viewport.startTile[1]; y<viewport.endTile[1];y++){
+              	for(var x =viewport.startTile[0];x<viewport.endTile[0];x++){
+
+              		switch(gameMap[y*mapW+x])
+              		{
+              		case 0:
+					ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
+					break;
+				        default:
+					ctx.fillStyle = "#ccffcc";
+					ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+              		}
+              		
+              	}
+              }
+
+              ctx.fillStyle = "#0000ff";
+              ctx.drawImage(player_Pic,player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]); 
+
+
+	          ctx.fillStyle = "#ff0000";
+	          ctx.fillText("FPS: " + framesLastSecond, 10, 20);
+
+	          requestAnimationFrame(drawGame);
+
+         }
+
+
+         
+
+   </script>
+   
+
+</body>
+</html>
