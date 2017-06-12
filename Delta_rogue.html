@@ -18,7 +18,7 @@
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0,
 	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
 	0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -27,7 +27,7 @@
 	0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
 	0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0,
 	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];
         var tileH = 40;//tile height and width set to 40px
@@ -40,6 +40,7 @@
         brick.src = "http://www.clker.com/cliparts/b/m/0/m/n/D/brick-wall-jail.svg";
         var player_Pic = new Image;
         player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
+        var exit;
         
         var keysDown = {
         	37: false,//left arrow
@@ -184,6 +185,10 @@
                 if(keysDown[37]&&player.tileFrom[0]>0&&gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
                 	player.tileTo[0] -= 1;//to move to the left
                   }
+                else if(keysDown[37]&&player.tileFrom[0]>0&&toIndex(player.tileFrom[0]-1,player.tileFrom[1]) == exit){
+                    alert("you have reached the next level");
+                  }//to check if the the next level exit has been reached
+  
                 else if(keysDown[38]&&player.tileFrom[1]>0&&gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
                     player.tileTo[1] -= 1;//to move up
                   }
@@ -211,11 +216,16 @@
               		switch(gameMap[y*mapW+x])
               		{
               		case 0:
-					ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
-					break;
+					           ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
+					           break;
+                  case 3:                     
+                    ctx.fillStyle = "#08af4b";
+                    ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                    exit = ((y*mapW)+x);
+                    break;
 				        default:
-					ctx.fillStyle = "#ccffcc";
-					ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+					          ctx.fillStyle = "#ccffcc";
+					          ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
               		}
               		
               	}
