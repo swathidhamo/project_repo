@@ -3,8 +3,14 @@
 	  <title>Game-for delta</title>
    </head>
    <body>
-   <canvas id = "canvas" height = "400" width = "400"></canvas>
-   <div id = "time"></div>
+       <div id = "instruction">
+         <ul>
+           <li>Press the space bar to start the game</li>
+           <li>You have 90 seconds to start the game</li>
+         </ul>
+       </div>
+       <canvas id = "canvas" height = "400" width = "400"></canvas>
+       <div id = "time"></div>
 
    <script type="text/javascript">
         
@@ -43,6 +49,7 @@
         var currentSecond = 0, frameCount = 0, framesLastSecond = 0; var lastFrameTime = 0;
         var player = new Character();
         var brick = new Image;
+        var wallPicture = new Array();
         brick.src = "http://www.clker.com/cliparts/b/m/0/m/n/D/brick-wall-jail.svg";
         var player_Pic = new Image;
         player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
@@ -51,7 +58,22 @@
 
         var time = 0;
         var gamePlay;
-        var fiveMinutes;
+        var fiveMinutes = 30*1;
+        var spaceBarPressed = false;
+        var status = 0;
+        //var fiveMinutes = ("level" + n).gameTime;
+
+        function level(n){//building a level object using a constructor to characterize each of the three levels
+           this.gameMap = "gameMap" + n;//nth level corresponds to the nth element of the gamemap array
+           this.height = n*5 + 15;
+           this.width = n*5 + 15;
+           this.gameTime = 90 + (n*60);
+           this.wallPicture = wallPicture[n];
+        }
+
+        var level0 = new level(0);
+        var level1 = new level(1);
+        var level2 = new level(2);
         
         
         var keysDown = {
@@ -60,6 +82,20 @@
         	39: false,//right arrow
         	40: false//down arrow
         };
+
+        /*var button = document.createElement("input");
+        button.setAttribute("type","submit");
+        button.setAttribute("value","Start");
+        button.setAttribute("id","start_btn");
+        document.body.appendChild(button); 
+
+           button.addEventListener("click",function(){
+           display = document.querySelector('#time');
+           startTimer(fiveMinutes, display);
+           //gamePlay = requestAnimationFrame(drawGame);
+           //ctx = canvas.getContext("2d");
+
+        })*/
 
         var viewport = {//creating a viewport object
         	screen:     [0,0],//dimensions of the canvas width and height
@@ -151,23 +187,38 @@
 
     
         window.onload = function(){
-            ctx = canvas.getContext("2d");
-        	gamePlay = requestAnimationFrame(drawGame);
+           ctx = canvas.getContext("2d");
+        	// gamePlay = requestAnimationFrame(drawGame);
         	ctx.font = "bold 10pt sans-serif";
           timeStart = Math.floor(Date.now()/1000);
-           var fiveMinutes = 30 * 1,
-        display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
+
+          //var fiveMinutes = 30 * 1,
+           display = document.querySelector('#time');
+        //startTimer(fiveMinutes, display);
 
 
         	window.addEventListener("keyup",function(e){
               if(e.keyCode>=37&&e.keyCode<=40){
               	keysDown[e.keyCode] = false;
+              if(e.keyCode==32&&status==0){
+                spaceBarPressed = false;
+
+                status++;
+              }
               }
         	});
         	window.addEventListener("keydown",function(e){
               if(e.keyCode>=37&&e.keyCode<=40){
               	keysDown[e.keyCode] = true;
+              }
+              if(e.keyCode==32&&status==0){
+                spaceBarPressed = true;
+                 display = document.querySelector('#time');
+                 gamePlay = requestAnimationFrame(drawGame);
+                 startTimer(fiveMinutes, display);
+                 var info = document.getElementById("instruction");
+                 info.style.display = "none";                 
+                 status++;
               }
         	});
 
@@ -188,6 +239,10 @@
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
+        ctx.fillStyle = "#ff0000";
+        ctx.fillText("Time: " + minutes + ":" + seconds, 10, 30);
+        ctx.fill();
+
 
         if (--timer < 0) {
             timer = duration;
