@@ -1,11 +1,6 @@
 <html>
    <head>
 	  <title>Game-for delta</title>
-    <style type="text/css">
-       canvas{
-        padding: 50px 50px 50px 50px;
-       }
-    </style>
    </head>
    <body>
        <div id = "instruction">
@@ -22,20 +17,20 @@
 
         var canvas = document.getElementById("canvas");
         var ctx = null;
-        var Map0 = [//there are 6 coins here
+        var Map0 = [
   4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0,
+  0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
   0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-  0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0,
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0,
   0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0,
-  0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+  0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0,
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0,
   0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
   0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0,
+  0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0,
   0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0,
-  0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0,
+  0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0,
   0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
   0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];
@@ -107,7 +102,6 @@
         player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
         var exit;
         var timeStart,gameTime = 0;
-        var k =0;
         var gameTransistion;
 
         var time = 0;
@@ -117,36 +111,13 @@
         var status = 0;
         var levelStatus = 0
         var i = 0;
-        var mapIndex;
         var n = 0;
         var current_map = [];
          current_map = "Map"+n;
-        var plan = new Array();
-        var layouts = [Map0,Map1,Map2];
-        var game = new Array();
-        var timers = new Array();
-        var coin = new Image;
-        coin.src = "https://www.mariowiki.com/images/thumb/d/d1/SM64_Yellow_Coin.png/113px-SM64_Yellow_Coin.png";
-        var treasure_X;
-        var treasure_Y;
-//        var coins = coinIndex[5] ,coin_status = true;
-         
-         /*var coin = {
-          location: 0,
-          status: true
-         };*/
-         var treasures = new Array();
-
-         function coin(){
-          this.location = 0;
-          this.status = true;
-         }
-
-
-
-        
-
-
+         var plan = new Array();
+         var layouts = [Map0,Map1,Map2];
+         var game = new Array();
+         var timers = new Array();
 
         //var fiveMinutes = ("level" + n).gameTime;
 
@@ -160,11 +131,13 @@
            this.mapH = n*5 + 15;
            this.mapW = n*5 + 15;
            this.layout = layouts[n];
-         }
+
+        }
 
         for(var j = 0;j<3;j++){
-          plan[j] = new level(j);//to create three instances of the object with each level
-         }
+          plan[j] = new level(j);
+
+        }
 
           
            /*brick.src = plan[i].wallPicture; 
@@ -184,8 +157,19 @@
         	40: false//down arrow
         };
 
-        
-      
+        /*var button = document.createElement("input");
+        button.setAttribute("type","submit");
+        button.setAttribute("value","Start");
+        button.setAttribute("id","start_btn");
+        document.body.appendChild(button); 
+
+           button.addEventListener("click",function(){
+           display = document.querySelector('#time');
+           startTimer(fiveMinutes, display);
+           //gamePlay = requestAnimationFrame(drawGame);
+           //ctx = canvas.getContext("2d");
+
+        })*/
 
         var viewport = {//creating a viewport object
         	screen:     [0,0],//dimensions of the canvas width and height
@@ -412,18 +396,7 @@
                       updateLevel();
                                       
                             }//to check if the the next level exit has been reached
-                  /* else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==6){
-                      
-                      gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1;
-                      player.tileTo[0] -= 1;
-                      gameMap[toIndex(player.tileFrom[0],player.tileFrom[1])]==1;
-
-                            }*/
-                      
-                                      
-                            }         
-
-                  
+                  }
                                         
                   //to move up
                 else if(keysDown[38]&&player.tileFrom[1]>0&&gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
@@ -488,44 +461,30 @@
               for(var y = viewport.startTile[1]; y<viewport.endTile[1];y++){
               	for(var x =viewport.startTile[0];x<viewport.endTile[0];x++){
                   gameMap = plan[i].layout;
-                  mapIndex = (y*mapW+x);
 
-
-              		switch(gameMap[mapIndex])
+              		switch(gameMap[y*mapW+x])
               		{
               		case 0:
 					           ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
                      ctx.fillStyle = "#00000b";
                      //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                    // exit = ((y*mapW)+x);
-					          break;
+					           break;
                   case 3:                     
                     ctx.fillStyle = "#08af4b";
                     ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     //exit = ((y*mapW)+x);
                     break;
                   case 4:                     
-                    ctx.fillStyle = "#0000ff";                    
+                    ctx.fillStyle = "#0000ff";
                     ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     //exit = ((y*mapW)+x);  
                     break;
 
 				          default:
-                      if(mapIndex%25==0){
-                             
-                         // treasures[k] = new coin();
-                         // treasures[k].location = mapIndex;
-                          ctx.fillStyle = "#000fcc";
-                          ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                          k++;
-                          //ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-
-                     }
-                     else{
-					              ctx.fillStyle = "#ccffcc";
+					          ctx.fillStyle = "#ccffcc";
 					          //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                        ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                      }
+                    ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
               		}
 
               		
@@ -547,44 +506,28 @@
            
 
          }
-       
-
-     /*   function treasure(){
-          this.status = true;//if the coin is still active and not collected
-          this.dimension = [30,30]; 
-          this.coinIndex = mapIndex;
-         }
-
-         treasure.prototype.draw = function(x,y){
-          if(status){
-            ctx.fillStyle = "#000fcc";
-            ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-          }            
-         };*/
 
 
-         
 
-
-         function updateLevel(){
+      function updateLevel(){
 
              if(levelStatus==i+1){
               i++;
               clearInterval(game[i]);
-                }  
+            }  
 
-              brick.src = plan[i].wallPicture; 
-              fiveMinutes = plan[i].gameTime;
-              gameMap = plan[i].layout;
-              mapW = plan[i].mapW;
-              mapH = plan[i].mapH;
-              //mapH = 25;
-              //mapW = 25;
-              player.placeAt(1,1);
+          brick.src = plan[i].wallPicture; 
+          fiveMinutes = plan[i].gameTime;
+          gameMap = plan[i].layout;
+          mapW = plan[i].mapW;
+          mapH = plan[i].mapH;
+          //mapH = 25;
+          //mapW = 25;
+          player.placeAt(1,1);
          
-              plan[i].clock(fiveMinutes, display,i);
-              display = document.querySelector('#time');
-              gamePlay = requestAnimationFrame(drawGame);
+          plan[i].clock(fiveMinutes, display,i);
+          display = document.querySelector('#time');
+          gamePlay = requestAnimationFrame(drawGame);
 
 
         }
