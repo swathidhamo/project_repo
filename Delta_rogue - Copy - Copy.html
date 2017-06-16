@@ -30,7 +30,7 @@
   0, 1, 0, 1, 0, 0, 0, 6, 1, 0, 0, 1, 1, 1, 0,
   0, 1, 0, 1, 0, 6, 0, 0, 1, 0, 0, 1, 0, 1, 0,
   0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 0,
   0, 6, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
   0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0,
@@ -50,7 +50,7 @@
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 3,
 	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
 	0, 6, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
 	0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 	0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -312,7 +312,7 @@
                 var enemyBullet = {
                   x: 220,
                   y: 255,
-                  velocityX: 6,
+                  velocityX: 5,
                   height: 5,
                   width: 15,
 
@@ -358,103 +358,102 @@
 
    
     
-        window.onload = function(){
+            window.onload = function(){
 
-         ctx = canvas.getContext("2d");
-         ctx.font = "bold 10pt sans-serif";
-         timeStart = Math.floor(Date.now()/1000);       
-         display = document.querySelector('#time');
+                  ctx = canvas.getContext("2d");
+                  ctx.font = "bold 10pt sans-serif";
+                  timeStart = Math.floor(Date.now()/1000);       
+                  display = document.querySelector('#time');
    
 
 
-        	window.addEventListener("keyup",function(e){
-              if(e.keyCode>=37&&e.keyCode<=40){
-              	keysDown[e.keyCode] = false;
-              if(e.keyCode==32&&status==0){
-                spaceBarPressed = false;
+        	        window.addEventListener("keyup",function(e){
+                     if(e.keyCode>=37&&e.keyCode<=40){
 
-                status++;
-               }
-              }
-        	});
-        	window.addEventListener("keydown",function(e){
-              if(e.keyCode>=37&&e.keyCode<=40){
-              	keysDown[e.keyCode] = true;
-                steps++;
+              	        keysDown[e.keyCode] = false;
+                      }
+
+                     if(e.keyCode==32&&status==0){
+
+                         spaceBarPressed = false;
+                         status++;
+                      }
+                  
+        	    });
+
+                	window.addEventListener("keydown",function(e){
+                     if(e.keyCode>=37&&e.keyCode<=40){
+
+              	         keysDown[e.keyCode] = true;
+                         steps++;
              //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
-              }
-              if(e.keyCode==32&&status==0){
-                spaceBarPressed = true;
-                 display = document.querySelector('#time');
-                // gamePlay = requestAnimationFrame(drawGame);
-                   updateLevel();
-        
-
-                 //startTimer(fiveMinutes, display);
-                 var info = document.getElementById("instruction");
-                 info.style.display = "none";                 
-                 status++;
-              }
-        	});
+                      }
+                      if(e.keyCode==32&&status==0){
+                         spaceBarPressed = true;
+                         display = document.querySelector('#time');
+                         // gamePlay = requestAnimationFrame(drawGame);
+                         updateLevel();       
+                         var info = document.getElementById("instruction");
+                         info.style.display = "none";                 
+                         status++;
+                      }
+            	});
 
           
 
-        	viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
+        	         viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
         };  
          
 
-       level.prototype.clock = function (duration, display,i) {
-       var timer = duration, minutes, seconds;
-       clearInterval(game);
+             level.prototype.clock = function (duration, display,i) {
+             var timer = duration, minutes, seconds;
+             clearInterval(game);
 
 
-       function  timerDisplay() {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+                    function  timerDisplay() {
+                     minutes = parseInt(timer / 60, 10);
+                     seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+                     minutes = minutes < 10 ? "0" + minutes : minutes;
+                     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
+                     display.textContent = minutes + ":" + seconds;
 
 
-        if (--timer < 0) {
-            timer = duration;
-        }
-     }
-        function check(){
-          if(minutes=="00"&& seconds == "00")
-         {
-          // cancelAnimationFrame(gamePlay);
-           clearInterval(game[i]);
-           if(levelStatus==i){
-            updateLevel();
-           }
-         }
+                     if (--timer < 0) {
+                       timer = duration;
+                      }
+                    }
 
-      }
-       timerDisplay();
-       clearInterval(game[i-1]);
 
-       game[i] = setInterval(function(){
-        
-        clearInterval(game[i-1]);
+                    function check(){
+
+                      if(minutes=="00"&& seconds == "00"){
           
-    
-       timerDisplay();
-       check();
+                       clearInterval(game[i]);
+                       if(levelStatus==i){
+                         updateLevel();
+                        }
+                      }
 
-      
-     }, 1000);
- };
+                    }
+                    timerDisplay();
+                    clearInterval(game[i-1]);
+
+                    game[i] = setInterval(function(){        
+                    clearInterval(game[i-1]);
+                     timerDisplay();
+                     check();
+                    }, 1000);
+                  };
                  
-          function drawGame()
-        {   
+                    function drawGame()
+                    {   
                           
-              if(ctx==null){
+                       if(ctx==null){
               
-              	return;
-                }
+              	          return;
+                           }
 
               var currentFrameTime = Date.now();
               var timeElapsed = currentFrameTime - lastFrameTime; 
@@ -510,8 +509,10 @@
                             }
                     else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){
                       energyLevel += 100;
-                       gameMap[toIndex(player.tileTo[0]-1,player.tileTo[1])]=1;
-                      player.tileTo[0] -= 3;
+                      player.delay -= 450;
+                      gameMap[toIndex(player.tileTo[0]-1,player.tileTo[1])]=1;
+                      player.tileTo[0] -= 1;
+                    
                                                  }        
                       
                                       
@@ -526,15 +527,18 @@
                       player.tileTo[1] -= 1;
                             }
                     else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==8){
-                      energyLevel += 100;
-                     // player.tileTo[1] -= 3;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                      player.position = [exitX,exitY];
+
+                       player.delay -= 450;
+                       energyLevel += 100;
+                       player.tileTo[1] -= 1;
+                       gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                
 
                     }        
 
                   else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==3){
                       player.tileTo[1] -= 1;
+                      
                       levelStatus++;
                       timer = 0;
                       updateLevel();
@@ -572,8 +576,9 @@
 
                   else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==8){
                       energyLevel += 100;
+                      player.delay -= 450;
                       gameMap[toIndex(player.tileTo[0]+1,player.tileTo[1])]=1;
-                       player.tileTo[0] += 3;
+                      player.tileTo[0] += 1;
                             }        
                                                   
                   }
@@ -600,9 +605,10 @@
                             }
                   else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==8){
                       energyLevel += 100;
+                      player.delay -= 450;
                       gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
-                     // player.tileTo[1]+= 3;
-                      player.placeAt(exitX,exitY);
+                      player.tileTo[1]+= 1;
+            
                     }        
 
 
@@ -653,12 +659,12 @@
                      ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                 //     console.log(x*tileW+viewport.offSet[0]+" "+y*tileH+viewport.offSet[1]);
                     break;
-                          /*
-                   case 7:
-                     ctx.fillStyle = "#ff0000";                     
-                     ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                          
+                   
+                  
+
                      
-                      enemy_t.shoot();
+                    /*  enemy_t.shoot();
                      pos_1 = gameMap[enemies+de]; 
                      pos_2 = gameMap[enemies];
                      if(pos_1!=1){
@@ -763,6 +769,19 @@
 
              if(levelStatus==i+1){
               i++;
+              if(i==1){
+              enemy.x += 100;
+              enemy.y += 50;
+              enemyBullet.x += 84;
+              enemyBullet.y += 35;
+               }
+               else if(i==2){
+                enemy.x -= 90;
+                enemy.y += 40;
+                enemyBullet.x += 78;
+                enemyBullet.y += 15;
+               }
+
               clearInterval(game[i]);
                 }  
 
@@ -771,106 +790,29 @@
               gameMap = plan[i].layout;
               mapW = plan[i].mapW;
               mapH = plan[i].mapH;
-              //mapH = 25;
-              //mapW = 25;
+              player.delay = 700;
+            
               player.placeAt(1,1);
          
               plan[i].clock(fiveMinutes, display,i);
               display = document.querySelector('#time');
               energyLevel  =100;
-               // var enemy_t = new Enemy();
-
               gamePlay = requestAnimationFrame(function(){
-                drawGame();
-                enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
-                enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
-                colliosionBullet(enemyBullet.x,enemyBullet.y,enemyBullet.width,enemyBullet.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                 drawGame();
+                 enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
+                 enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
+                 colliosionBullet(enemyBullet.x,enemyBullet.y,enemyBullet.width,enemyBullet.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
                  colliosionBullet(enemy.x,enemy.y,enemy.width,enemy.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
                  playerEnergy();
 
-
-                //enemyBullet.move();
-               // enemy.draw();
               });
           
-           //   enemyMove = requestAnimationFrame(patrolEnemy);
-           //   patrolEnemy();
-              
 
 
         }
 
 
-          
-
-
-
-
-
-       /*  function setUpEnemy(){
-           this.position = [0,0];
-           this.dimension = [35,35];
-           this.status = true;
-           this.offSete = [0,0];
-
-         }
-         for(var j = 0;j<2;j++){
-           enemy[k] = new setUpEnemy();
-           var tx = 200,ty = 200;
-           enemy[k].position = [tx,ty];tx += 79,ty += 250;
-           enemy[k].offSete = [0,0];
-
-         }
-          
-           setUpEnemy.prototype.moveEnemy = function(ex,ey){
-             this.position[0] += ex;
-             this.position[1] += ey;
-             };
-
-           setUpEnemy.prototype.drawEnemy = function(offX,offY){
-          
-             ctx.drawImage(enemy_pic,enemy[k].position[0]+offX,enemy[k].position[1]+offY,enemy[k].dimension[0],enemy[k].dimension[1]);
-             ctx.fill();  
-             };
-
-
-         setUpEnemy.prototype.enemyMovement =  function(ex,ey){
-              this.moveEnemy(ex,ey);
-              this.drawEnemy(this.offSete[0],this.offSete[1]);
-           };
-
-
-              function Characteren(){//class that gives all the information about the character or player's movement and position
-           
-              this.dimension = [30,30];//dimension of the character 
-              this.position = [45,45];//absolute position of the character
-           
-          }
-          var enemy_character = new Characteren(); 
-          enemy_character.position = [350,350];
-          enemy_character.dimension = [30,30];
-             Characteren.prototype.enemyMovement = function(ex,ey){
-              if(this.position[0]+ex>230||this.position[0]+ex<100){
-                ex = -ex;
-              }
-              else if(this.position[1]+ey>viewport.screen[1]||this.position[1]+ey<0){
-                ey = -ey;
-              }
-
-                this.position[0] += ex;
-                this.position[1] += ey;
-             };
-             Characteren.prototype.drawEnemy = function(){
-                ctx.fillStyle = "#0000ff";                                                           
-                ctx.fillRect(this.position[0],this.position[1],this.dimension[0],this.dimension[1]);
-                this.enemyMovement(moveX,0);
-                    
-
-             }
-
-
-*/
-
+        
 
 
          
