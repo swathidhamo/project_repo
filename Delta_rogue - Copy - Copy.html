@@ -149,6 +149,7 @@
         var de = 1;
         var pos_1, pos_2, temp;
         var ex = 4;
+        var player_status = true;
 
 
 
@@ -323,15 +324,26 @@
                   moveB: function(bx,by){
                   if(this.x-this.velocityX<35){
                     this.x = 220;
+                    player_status = true;
                   }
 
                   this.x -= this.velocityX;
+
                   this.drawB(bx,by);
                   }
 
                 };
 
-                
+                function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2){
+                 
+                  if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_status){
+                    energyLevel -= 50;
+                    player_status  =false;
+                  }
+          
+                }
+                  
+                    
 
           
             
@@ -722,9 +734,11 @@
             //enemy.draw();
             
 	         gamePlay =  requestAnimationFrame(function(){
-            drawGame();
+           drawGame();
            enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
            enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
+           colliosionBullet(enemyBullet.x,enemyBullet.y,enemyBullet.width,enemyBullet.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+
            //enemyBullet.move();
            });
 
@@ -760,6 +774,8 @@
                 drawGame();
                 enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
                 enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
+                colliosionBullet(enemyBullet.x,enemyBullet.y,enemyBullet.width,enemyBullet.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+
                 //enemyBullet.move();
                // enemy.draw();
               });
