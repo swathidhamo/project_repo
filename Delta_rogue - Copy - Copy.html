@@ -337,10 +337,17 @@
                 function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2){
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_status){
-                    energyLevel -= 50;
+                    energyLevel -= Math.round(100/3);
                     player_status  =false;
                   }
           
+                }
+                function playerEnergy(){
+                  if(energyLevel<0){
+                    alert("you are dead so restart the game");
+                    updateLevel();
+
+                  }
                 }
                   
                     
@@ -738,6 +745,8 @@
            enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
            enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
            colliosionBullet(enemyBullet.x,enemyBullet.y,enemyBullet.width,enemyBullet.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+           colliosionBullet(enemy.x,enemy.y,enemy.width,enemy.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+           playerEnergy();
 
            //enemyBullet.move();
            });
@@ -768,6 +777,7 @@
          
               plan[i].clock(fiveMinutes, display,i);
               display = document.querySelector('#time');
+              energyLevel  =100;
                // var enemy_t = new Enemy();
 
               gamePlay = requestAnimationFrame(function(){
@@ -775,6 +785,9 @@
                 enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
                 enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
                 colliosionBullet(enemyBullet.x,enemyBullet.y,enemyBullet.width,enemyBullet.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                 colliosionBullet(enemy.x,enemy.y,enemy.width,enemy.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                 playerEnergy();
+
 
                 //enemyBullet.move();
                // enemy.draw();
