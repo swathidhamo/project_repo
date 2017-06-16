@@ -26,15 +26,15 @@
   4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0,
   0, 6, 0, 0, 0, 1, 0, 0, 0, 0, 1, 6, 0, 0, 0,
-  0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0,
+  0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0,
   0, 1, 0, 1, 0, 0, 0, 6, 1, 0, 0, 1, 1, 1, 0,
-  0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0,
-  0, 1, 1, 1, 1, 6, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+  0, 1, 0, 1, 0, 6, 0, 0, 1, 0, 0, 1, 0, 1, 0,
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
   0, 6, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0,
+  0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0,
-  0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0,
+  0, 8, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0,
   0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 6, 0, 1, 0,
   0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 0,
   0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -42,9 +42,9 @@
         var Map1 = [
 	4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0,
+	0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 8, 1, 1, 0, 1, 0, 1, 0, 0, 0,
 	0, 1, 1, 1, 1, 6, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 1, 1, 0,
+	0, 8, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 1, 1, 0,
 	0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0,
 	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 3,
@@ -109,16 +109,19 @@
         var timeStart,gameTime = 0;
         var k =0;
         var gameTransistion;
+        var moveX = 4;
 
         var time = 0;
         var gamePlay;
         var fiveMinutes;
         var spaceBarPressed = false;
         var status = 0;
-        var levelStatus = 0
+        var levelStatus = 0;
+        var dy = 3;
         var i = 0;
         var mapIndex;
         var n = 0;
+        var enemyMotion = 0;
         var current_map = [];
          current_map = "Map"+n;
         var plan = new Array();
@@ -126,28 +129,29 @@
         var game = new Array();
         var timers = new Array();
         var coin = new Image;
-        coin.src = "https://www.mariowiki.com/images/thumb/d/d1/SM64_Yellow_Coin.png/113px-SM64_Yellow_Coin.png";
+        coin.src = "http://www.clker.com/cliparts/y/v/9/N/0/x/treasure-chest-hi.png";
         var coinCollected = 0;
-//        var coins = coinIndex[5] ,coin_status = true;
-         
-         /*var coin = {
-          location: 0,
-          status: true
-         };*/
-         var treasures = new Array();
-
-         function coin(){
-          this.location = 0;
-          this.status = true;
-         }
-
-
-
+        var powerUpPic = new Image;
+        powerUpPic.src = "https://previews.123rf.com/images/lineartestpilot/lineartestpilot1410/lineartestpilot141004558/32623054-cartoon-fizzy-drink-Stock-Photo.jpg";
+        var energyLevel = 100;
+        var steps = 0;
+        var exitX, exitY;
         
+        var enemy_pic = new Image;
+        enemy_pic.src = "https://s3.amazonaws.com/gameartpartnersimagehost/wp-content/uploads/2016/10/Fatty-Slug-Bug-featured.png";
+        var enemyInitialize = 0;
+
+        var treasures = new Array();
+       // var enemy = new Array();
+        var alive = true;
+        var offX,offY;
+        var enemies;
+        var de = 1;
+        var pos_1, pos_2, temp;
+        var ex = 4;
 
 
 
-        //var fiveMinutes = ("level" + n).gameTime;
 
         function level(n){//building a level object using a constructor to characterize each of the three levels
            //this.gameMap = "gameMap" + n;//nth level corresponds to the nth element of the gamemap array
@@ -162,7 +166,7 @@
          }
 
         for(var j = 0;j<3;j++){
-          plan[j] = new level(j);//to create three instances of the object with each level
+           plan[j] = new level(j);//to create three instances of the object with each level
          }
 
           
@@ -177,20 +181,20 @@
 
 
         var keysDown = {
-        	37: false,//left arrow
-        	38: false,//up arrow
-        	39: false,//right arrow
-        	40: false//down arrow
+           	37: false,//left arrow
+        	  38: false,//up arrow
+        	  39: false,//right arrow
+        	  40: false//down arrow
         };
 
         
       
 
         var viewport = {//creating a viewport object
-        	screen:     [0,0],//dimensions of the canvas width and height
-        	startTile:  [0,0],//the top left tile from which the canvas is starting
-          endTile:    [0,0],//the bottom right tile at which the canvs finishes
-          offSet:     [0,0],//the pixels by which we draw relative position with respect to which we will draw the canvas
+        	 screen:     [0,0],//dimensions of the canvas width and height
+        	 startTile:  [0,0],//the top left tile from which the canvas is starting
+           endTile:    [0,0],//the bottom right tile at which the canvs finishes
+           offSet:     [0,0],//the pixels by which we draw relative position with respect to which we will draw the canvas
 
           update:  function(px,py){//here px and py are the coordinates of the points around which the viewport is centered
             	this.offSet[0] = Math.floor((this.screen[0]/2)-px);//set new offsets according to the px and py value
@@ -219,14 +223,16 @@
 
         }
 
-        function Character(){//class that gives all the information about the character or player's movement and position
-         	this.tileFrom = [1,1];//position of the tile the character is moving from
-         	this.tileTo = [1,1];//position of the tile it is moving to
-         	this.timeMoved = 0; //time since it started moving
-         	this.dimension = [30,30];//dimension of the character 
-         	this.position = [45,45];//absolute position of the character
-         	this.delay = 700; //700ms delay
-         }
+          function Character(){//class that gives all the information about the character or player's movement and position
+         	    this.tileFrom = [1,1];//position of the tile the character is moving from
+         	    this.tileTo = [1,1];//position of the tile it is moving to
+         	    this.timeMoved = 0; //time since it started moving
+         	    this.dimension = [30,30];//dimension of the character 
+         	    this.position = [45,45];//absolute position of the character
+         	    this.delay = 700; //700ms delay
+          }
+
+       
 
             Character.prototype.placeAt = function(x,y)
             {//method to place the function to x,y position
@@ -273,19 +279,73 @@
             	return (x+(y*mapW));
             }
 
+
+                var enemy =  {
+                 x: 370,
+                 y: 450,
+                 width: 30,
+                 height: 30,
+               
+                 //
+                 draw: function(ox,oy) {
+      
+                   ctx.fillStyle = "34e00f";
+                   ctx.fillRect(this.x+ox+(40-this.x)/2,this.y+oy+(40-this.y)/2,this.width,this.height);                   
+         
+                 },
+                 move: function(ex,ey,ox,oy){
+                    /*if(this.x+ex>500){
+                     ex = -ex;
+                    }
+                    else if(this.x+ex<200){
+                     ex = -ex;
+                    }*/
+                    //this.x -= ex;
+              
+                   this.draw(ox,oy);
+
+                 }
+
+                };   
+
+                var enemyBullet = {
+                  x: 220,
+                  y: 255,
+                  velocityX: 6,
+                  height: 5,
+                  width: 15,
+
+                  drawB: function(bx,by){
+                   ctx.fillStyle = "0ed00e";
+                   ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
+                   ctx.fill();
+                  },
+                  moveB: function(bx,by){
+                  if(this.x-this.velocityX<35){
+                    this.x = 220;
+                  }
+
+                  this.x -= this.velocityX;
+                  this.drawB(bx,by);
+                  }
+
+                };
+
+                
+
+          
+            
+
+
    
     
         window.onload = function(){
-           ctx = canvas.getContext("2d");
-        
-          
-        	// gamePlay = requestAnimationFrame(drawGame);
-        	ctx.font = "bold 10pt sans-serif";
-          timeStart = Math.floor(Date.now()/1000);
 
-          //var fiveMinutes = 30 * 1,
-           display = document.querySelector('#time');
-        //startTimer(fiveMinutes, display);
+         ctx = canvas.getContext("2d");
+         ctx.font = "bold 10pt sans-serif";
+         timeStart = Math.floor(Date.now()/1000);       
+         display = document.querySelector('#time');
+   
 
 
         	window.addEventListener("keyup",function(e){
@@ -295,12 +355,14 @@
                 spaceBarPressed = false;
 
                 status++;
-              }
+               }
               }
         	});
         	window.addEventListener("keydown",function(e){
               if(e.keyCode>=37&&e.keyCode<=40){
               	keysDown[e.keyCode] = true;
+                steps++;
+             //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
               }
               if(e.keyCode==32&&status==0){
                 spaceBarPressed = true;
@@ -324,9 +386,7 @@
 
        level.prototype.clock = function (duration, display,i) {
        var timer = duration, minutes, seconds;
-       console.log(timer);
        clearInterval(game);
-       console.log("this is the iteration"+i);
 
 
        function  timerDisplay() {
@@ -363,15 +423,15 @@
           
     
        timerDisplay();
-       console.log(i+"th");
        check();
+
       
      }, 1000);
  };
-     
+                 
           function drawGame()
-        {  
-                         
+        {   
+                          
               if(ctx==null){
               
               	return;
@@ -382,17 +442,29 @@
               gameTime += timeElapsed;                                  
               var sec = Math.floor(Date.now()/1000);
 
+              for(var j = 0; j<gameMap.length;j++){
+              if(gameMap[j]==7){
+                enemies = j;
+              }
+            }
+
+
               if(currentSecond!=sec){
               	currentSecond = sec;
               	framesLastSecond = frameCount;
               	frameCount = 1
                 }
 
+
+
               else{
               	frameCount++;
                }
 
+
+
               if(!player.processMovement(currentFrameTime)){
+                
 
               	// *We check for 3 conditions before moving the character to a tile
               	//* if the right key is pressed, if it's position is not out of bounds and if the new position is ascessable 
@@ -408,15 +480,20 @@
                       player.tileTo[0] -= 1;
                       levelStatus++; 
                       timer = 0;
-                      updateLevel();
-                                      
+                      updateLevel();                                      
                             }//to check if the the next level exit has been reached
+
                    else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==6){
                       coinCollected++;
                       player.tileTo[0] -= 1;
                       gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
+                    else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){
+                      energyLevel += 100;
+                       gameMap[toIndex(player.tileTo[0]-1,player.tileTo[1])]=1;
+                      player.tileTo[0] -= 3;
+                                                 }        
                       
                                       
                       }         
@@ -429,6 +506,13 @@
                   if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
                       player.tileTo[1] -= 1;
                             }
+                    else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==8){
+                      energyLevel += 100;
+                     // player.tileTo[1] -= 3;
+                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                      player.position = [exitX,exitY];
+
+                    }        
 
                   else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==3){
                       player.tileTo[1] -= 1;
@@ -465,9 +549,14 @@
                       coinCollected++;
                       player.tileTo[0] += 1;
                       gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                            }    
 
-
-                            }                      
+                  else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==8){
+                      energyLevel += 100;
+                      gameMap[toIndex(player.tileTo[0]+1,player.tileTo[1])]=1;
+                       player.tileTo[0] += 3;
+                            }        
+                                                  
                   }
 
                 else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)) {
@@ -489,7 +578,14 @@
                       player.tileTo[1] += 1;
                       gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
-                  }
+                            }
+                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==8){
+                      energyLevel += 100;
+                      gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
+                     // player.tileTo[1]+= 3;
+                      player.placeAt(exitX,exitY);
+                    }        
+
 
                    
                    }
@@ -507,9 +603,11 @@
 
               for(var y = viewport.startTile[1]; y<viewport.endTile[1];y++){
               	for(var x =viewport.startTile[0];x<viewport.endTile[0];x++){
-                  gameMap = plan[i].layout;
+                 // gameMap = plan[i].layout;
                   mapIndex = (y*mapW+x);
-
+                  
+                  dy = 0;
+            
 
               		switch(gameMap[mapIndex])
               		{
@@ -517,42 +615,62 @@
 					           ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
                      ctx.fillStyle = "#00000b";
                      //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                   // exit = ((y*mapW)+x);
 					          break;
+
                   case 3:                     
-                    ctx.fillStyle = "#08af4b";
-                    ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                    //exit = ((y*mapW)+x);
+                     ctx.fillStyle = "#08af4b";
+                     exitX = x; 
+                     exitY = y; 
+                     ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
+
                   case 4:                     
-                    ctx.fillStyle = "#0000ff";                    
-                    ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                    //exit = ((y*mapW)+x);  
+                     ctx.fillStyle = "#0000ff";                                                           
+                     ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
 
                    case 6:                     
-                    ctx.fillStyle = "#0000ff";                    
-                    ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                    //exit = ((y*mapW)+x);  
-                    break;  
+                     ctx.fillStyle = "#0000ff";                    
+                     ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                //     console.log(x*tileW+viewport.offSet[0]+" "+y*tileH+viewport.offSet[1]);
+                    break;
+                          /*
+                   case 7:
+                     ctx.fillStyle = "#ff0000";                     
+                     ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                     
+                      enemy_t.shoot();
+                     pos_1 = gameMap[enemies+de]; 
+                     pos_2 = gameMap[enemies];
+                     if(pos_1!=1){
+                        de = -de
+                        }
+                      temp = gameMap[enemies];
+                      gameMap[enemies] = gameMap[enemies+de];
+                      gameMap[enemies+de] = temp;*/
 
 
-				          default:
-                     /* if(mapIndex%25==0){
-                             
-                         // treasures[k] = new coin();
-                         // treasures[k].location = mapIndex;
-                          ctx.fillStyle = "#000fcc";
-                          ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                          k++;
-                          //ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
 
-                     }
-                     else{*/
-					              ctx.fillStyle = "#ccffcc";
-					          //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                        ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                     // }
+             
+                    // enemies = mapIndex;
+                      //console.log(x*tileW+viewport.offSet[0],+ " " +y*tileH+viewport.offSet[1]);
+                           
+
+                     //patrolEnemy(enemies);
+
+                     //break;  
+              
+                   case 8:
+                     ctx.fillStyle = "#0e0d0ff";
+                     
+                     ctx.drawImage(powerUpPic,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                     break;
+
+				           default:
+					             ctx.fillStyle = "#ccffcc";
+					              //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                       ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                     
               		}
 
               		
@@ -561,42 +679,63 @@
 
               ctx.fillStyle = "#FF00ff";
               //ctx.fillRect(player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]);
+              
               ctx.drawImage(player_Pic,player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]); 
+             
 
+                  
+
+        
+              
+
+            
+       /*       offX = viewport.offSet[0];
+              offY = viewport.offSet[1];
+
+             
+             ctx.fillStyle = "#0000ff";
+                           
+                
+              enemy[0].offSete[0] = viewport.offSet[0];//something wrong here
+              enemy[0].offSete[1] = viewport.offSet[1];
+              enemy[0].enemyMovement(10,-10);
+
+              enemy[1].offSete[0] = viewport.offSet[0];
+              enemy[1].offSete[1] = viewport.offSet[1];
+              enemy[1].enemyMovement(10,-10);
+                  
+
+              enemyInitialize++;*/
+            
 
 	          ctx.fillStyle = "#ff0000";
 	          ctx.fillText("FPS: " + framesLastSecond, 10, 20);
 
             ctx.fillStyle = "#ff0000";
-            ctx.fillText("Coin: " + coinCollected, 20, 30);
+            ctx.fillText("Coin: " + coinCollected, 10, 30);
 
+            ctx.fillStyle = "#ff0000";
+            ctx.fillText("Energy: " + energyLevel + "%", 10, 40);
 
-            //ctx.fillStyle = "#ff0000";
-            //ctx.fillText(cTime, 30, 40);
+             ctx.fillStyle = "34e00f";
+           //  ctx.fillRect(enemy.x+viewport.offSet[0],enemy.y+viewport.offSet[1],enemy.width,enemy.height);                   
+            //enemy.draw();
             
-	         gamePlay =  requestAnimationFrame(drawGame);
+	         gamePlay =  requestAnimationFrame(function(){
+            drawGame();
+           enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
+           enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
+           //enemyBullet.move();
+           });
+
+
+
            
 
          }
        
 
-     /*   function treasure(){
-          this.status = true;//if the coin is still active and not collected
-          this.dimension = [30,30]; 
-          this.coinIndex = mapIndex;
-         }
-
-         treasure.prototype.draw = function(x,y){
-          if(status){
-            ctx.fillStyle = "#000fcc";
-            ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-          }            
-         };*/
-
-
-         
-
-
+      
          function updateLevel(){
 
              if(levelStatus==i+1){
@@ -615,10 +754,93 @@
          
               plan[i].clock(fiveMinutes, display,i);
               display = document.querySelector('#time');
-              gamePlay = requestAnimationFrame(drawGame);
+               // var enemy_t = new Enemy();
+
+              gamePlay = requestAnimationFrame(function(){
+                drawGame();
+                enemy.move(ex,0,viewport.offSet[0],viewport.offSet[1]);
+                enemyBullet.moveB(viewport.offSet[0],viewport.offSet[1]);
+                //enemyBullet.move();
+               // enemy.draw();
+              });
+          
+           //   enemyMove = requestAnimationFrame(patrolEnemy);
+           //   patrolEnemy();
+              
 
 
         }
+
+
+          
+
+
+
+
+
+       /*  function setUpEnemy(){
+           this.position = [0,0];
+           this.dimension = [35,35];
+           this.status = true;
+           this.offSete = [0,0];
+
+         }
+         for(var j = 0;j<2;j++){
+           enemy[k] = new setUpEnemy();
+           var tx = 200,ty = 200;
+           enemy[k].position = [tx,ty];tx += 79,ty += 250;
+           enemy[k].offSete = [0,0];
+
+         }
+          
+           setUpEnemy.prototype.moveEnemy = function(ex,ey){
+             this.position[0] += ex;
+             this.position[1] += ey;
+             };
+
+           setUpEnemy.prototype.drawEnemy = function(offX,offY){
+          
+             ctx.drawImage(enemy_pic,enemy[k].position[0]+offX,enemy[k].position[1]+offY,enemy[k].dimension[0],enemy[k].dimension[1]);
+             ctx.fill();  
+             };
+
+
+         setUpEnemy.prototype.enemyMovement =  function(ex,ey){
+              this.moveEnemy(ex,ey);
+              this.drawEnemy(this.offSete[0],this.offSete[1]);
+           };
+
+
+              function Characteren(){//class that gives all the information about the character or player's movement and position
+           
+              this.dimension = [30,30];//dimension of the character 
+              this.position = [45,45];//absolute position of the character
+           
+          }
+          var enemy_character = new Characteren(); 
+          enemy_character.position = [350,350];
+          enemy_character.dimension = [30,30];
+             Characteren.prototype.enemyMovement = function(ex,ey){
+              if(this.position[0]+ex>230||this.position[0]+ex<100){
+                ex = -ex;
+              }
+              else if(this.position[1]+ey>viewport.screen[1]||this.position[1]+ey<0){
+                ey = -ey;
+              }
+
+                this.position[0] += ex;
+                this.position[1] += ey;
+             };
+             Characteren.prototype.drawEnemy = function(){
+                ctx.fillStyle = "#0000ff";                                                           
+                ctx.fillRect(this.position[0],this.position[1],this.dimension[0],this.dimension[1]);
+                this.enemyMovement(moveX,0);
+                    
+
+             }
+
+
+*/
 
 
 
