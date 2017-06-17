@@ -350,10 +350,10 @@
                 };
 
                 enemy.prototype.move = function(ox,oy){
-                  if(this.x+this.velocityX>450){
+                  if(this.x+this.velocityX>335){
                      this.velocityX = -3;
                     }
-                    else if(this.x+ex<150){
+                    else if(this.x+ex<100){
                      this.velocityX = 3;
                     }
                     this.x += this.velocityX;
@@ -379,18 +379,21 @@
 
                 enemyBullet.prototype.moveB = function(bx,by){
                    if(this.x-this.velocityX<35){
-                     this.x = 220;
+                     this.x = enemys.x;
                      player_status = true;
                   }
 
+                  // this.x = enemy.x;
                    this.x -= this.velocityX;
                    this.drawB(bx,by);
                   
 
                 };
-                var enemys = new enemy(220,234,30,30,3);               
 
-                var enemyBullets = new enemyBullet(220,255,15,5,3.5);
+                var enemys = new enemy(220,245,30,30,3);               
+                var enemyBullets = new enemyBullet(enemys.x,255,15,5,3);
+                var enemyFinal = new enemy(550,925,30,30,3);
+                var enemyBulletFinal = new enemyBullet(enemyFinal.x,935,15,5,3);
                 
                 
                 
@@ -403,11 +406,11 @@
                     player.delay += 50;
                     player_status = false;
                     
-                  }
+                   }
           
-                }
+                 }
 
-                  function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2){
+                function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2){
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy){
                     energyLevel -= Math.round(100/6);
@@ -417,7 +420,7 @@
                     
                   }
           
-                }
+                 }
 
 
 
@@ -443,6 +446,7 @@
                   ctx.font = "bold 10pt sans-serif";
                   timeStart = Math.floor(Date.now()/1000);       
                   display = document.querySelector('#time');
+      
    
 
 
@@ -835,8 +839,12 @@
             
 	         gamePlay =  requestAnimationFrame(function(){
            drawGame();
+           //enemyBullets.x  = enemys.x;
            enemys.move(viewport.offSet[0],viewport.offSet[1]);
+           enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
+
            enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
+           enemyBulletFinal.moveB(viewport.offSet[0],viewport.offSet[1]);
             //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
           
 
@@ -864,15 +872,16 @@
               i++;
               if(i==1){
               enemys.x += 100;
-              enemys.y += 50;
-              enemyBullets.x += 84;
-              enemyBullets.y += 35;
+              enemys.y += 40;
+              enemyBullets.x += 100;
+              enemyBullets.y += 40
                }
                else if(i==2){
-                enemys.x -= 90;
-                enemys.y += 40;
-                enemyBullets.x += 78;
-                enemyBullets.y += 15;
+
+                enemys.x += 390;
+                enemys.y += 240;
+                enemyBullets.x += 390;
+                enemyBullets.y += 240;
                }
 
               clearInterval(game[i]);
@@ -892,17 +901,21 @@
               energyLevel  =100;
               gamePlay = requestAnimationFrame(function(){
                  drawGame();
+                 //enemyBullets.x = enemy.x;
                  enemys.move(viewport.offSet[0],viewport.offSet[1]);
+                 enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
                  enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
+                 enemyBulletFinal.move(viewport.offSet[0],viewport.offSet[1]);
                  //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
             
                    colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-           playerEnergy();
+                   colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                   playerEnergy();
                 
-                 colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-                
+                   colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                   colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);                
                  
-                 playerEnergy();
+                    playerEnergy();
 
               });
           
