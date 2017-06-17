@@ -1,6 +1,6 @@
 <html>
    <head>
-    <title>Game-for delta</title>
+	  <title>Game-for delta</title>
     <style type="text/css">
        canvas{
         padding: 50px 50px 50px 50px;
@@ -40,34 +40,34 @@
   0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];
         var Map1 = [
-  4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 0,
-  0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 8, 1, 1, 0, 1, 0, 1, 0, 0, 0,
-  0, 1, 1, 1, 1, 6, 1, 1, 1, 0, 1, 1, 9, 0, 1, 1, 1, 1, 1, 0,
-  0, 8, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 1, 1, 0,
-  0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 3,
-  0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
-  0, 6, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
-  0, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
-  0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 0,
-  0, 1, 6, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
-  0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 6, 1, 0, 1, 1, 1, 0, 1, 0,
-  0, 1, 0, 0, 0, 0, 0, 9, 0, 1, 0, 0, 1, 0, 1, 1, 1, 9, 1, 0,
-  0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 8, 1, 1, 0, 1, 0, 1, 0, 0, 0,
+	0, 1, 1, 1, 1, 6, 1, 1, 1, 0, 1, 1, 9, 0, 1, 1, 1, 1, 1, 0,
+	0, 8, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 6, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 3,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 6, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 0,
+	0, 1, 6, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
+	0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 6, 1, 0, 1, 1, 1, 0, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 9, 0, 1, 0, 0, 1, 0, 1, 1, 1, 9, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];
 
 
  var Map2= [
   4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0,
-  0, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0,
-  0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 6, 0,
+  0, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+  0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 6, 0,
   0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0,
   0, 1, 0, 1, 0, 0, 0, 6, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0,
   0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 6, 0, 9, 1, 0, 0,
@@ -174,114 +174,170 @@
          }
           
         var keysDown = {
-            37: false,//left arrow
-            38: false,//up arrow
-            39: false,//right arrow
-            40: false//down arrow
+           	37: false,//left arrow
+        	  38: false,//up arrow
+        	  39: false,//right arrow
+        	  40: false//down arrow
         };
 
         
       
 
         var viewport = {//creating a viewport object
-           screen:     [0,0],//dimensions of the canvas width and height
-           startTile:  [0,0],//the top left tile from which the canvas is starting
+        	 screen:     [0,0],//dimensions of the canvas width and height
+        	 startTile:  [0,0],//the top left tile from which the canvas is starting
            endTile:    [0,0],//the bottom right tile at which the canvs finishes
            offSet:     [0,0],//the pixels by which we draw relative position with respect to which we will draw the canvas
 
           update:  function(px,py){//here px and py are the coordinates of the points around which the viewport is centered
-              this.offSet[0] = Math.floor((this.screen[0]/2)-px);//set new offsets according to the px and py value
-              this.offSet[1] = Math.floor((this.screen[1]/2)-py);
+            	this.offSet[0] = Math.floor((this.screen[0]/2)-px);//set new offsets according to the px and py value
+            	this.offSet[1] = Math.floor((this.screen[1]/2)-py);
 
 
-              var tile = [
-                Math.floor(px/tileW),
-                Math.floor(py/tileH)
-              ];
+            	var tile = [
+            		Math.floor(px/tileW),
+            		Math.floor(py/tileH)
+            	];
 
 
-              this.startTile[0] = tile[0] - 1 -Math.ceil((this.screen[0]/2)/tileW);
-              this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2)/tileH);
+            	this.startTile[0] = tile[0] - 1 -Math.ceil((this.screen[0]/2)/tileW);
+            	this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/2)/tileH);
 
-              if(this.startTile[0]<0){this.startTile[0]=0;}//checking for boundary conditions for the startTile
-              if(this.startTile[1]<0){this.startTile[1]=0;}
+            	if(this.startTile[0]<0){this.startTile[0]=0;}//checking for boundary conditions for the startTile
+            	if(this.startTile[1]<0){this.startTile[1]=0;}
 
-              this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2)/tileW);
-              this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[1]/2)/tileH);
+            	this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2)/tileW);
+            	this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[1]/2)/tileH);
 
-              if(this.endTile[0]>=mapW){this.endTile[0] = mapW;}
-              if(this.endTile[1]>=mapW){this.endTile[1] = mapH;}
+            	if(this.endTile[0]>=mapW){this.endTile[0] = mapW;}
+            	if(this.endTile[1]>=mapW){this.endTile[1] = mapH;}
 
             },
 
         }
 
           function Character(){//class that gives all the information about the character or player's movement and position
-              this.tileFrom = [1,1];//position of the tile the character is moving from
-              this.tileTo = [1,1];//position of the tile it is moving to
-              this.timeMoved = 0; //time since it started moving
-              this.dimension = [30,30];//dimension of the character 
-              this.position = [45,45];//absolute position of the character
-              this.delay = 400; //700ms delay
+         	    this.tileFrom = [1,1];//position of the tile the character is moving from
+         	    this.tileTo = [1,1];//position of the tile it is moving to
+         	    this.timeMoved = 0; //time since it started moving
+         	    this.dimension = [30,30];//dimension of the character 
+         	    this.position = [45,45];//absolute position of the character
+         	    this.delay = 400; //700ms delay
           }
 
        
 
             Character.prototype.placeAt = function(x,y)
             {//method to place the function to x,y position
-              this.tileFrom = [x,y];
-              this.tileTo = [x,y];
-              this.position[0] = x*tileW + ((tileW-this.dimension[0])/2);
-              this.position[1] = y*tileH + ((tileH-this.dimension[1])/2);
+            	this.tileFrom = [x,y];
+            	this.tileTo = [x,y];
+            	this.position[0] = x*tileW + ((tileW-this.dimension[0])/2);
+            	this.position[1] = y*tileH + ((tileH-this.dimension[1])/2);
             };
 
             Character.prototype.processMovement = function(t)
             {
-              if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]){   
-                                                                //since the character has already moved to it's destination file 
-                return false;
-              }
-              if(t-this.timeMoved>=this.delay){
-                  this.placeAt(this.tileTo[0],this.tileTo[1]);
-              }
+            	if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]){   
+            	                                                  //since the character has already moved to it's destination file 
+            		return false;
+            	}
+            	if(t-this.timeMoved>=this.delay){
+            	    this.placeAt(this.tileTo[0],this.tileTo[1]);
+            	}
 
-              else{
-                this.position[0] = tileW*this.tileFrom[0] + ((tileW-this.dimension[0])/2);
-                this.position[1] = tileW*this.tileFrom[1] + ((tileW-this.dimension[1])/2);
-              
+            	else{
+            		this.position[0] = tileW*this.tileFrom[0] + ((tileW-this.dimension[0])/2);
+            		this.position[1] = tileW*this.tileFrom[1] + ((tileW-this.dimension[1])/2);
+            	
 
-                      if(this.tileTo[0]!=this.tileFrom[0]){
-                        var diff = (tileW/this.delay)*(t-this.timeMoved);
-                        this.position[0] += (this.tileTo[0]<this.tileFrom[0]) ? 0-diff:diff;
-                             }
+            	        if(this.tileTo[0]!=this.tileFrom[0]){
+            		        var diff = (tileW/this.delay)*(t-this.timeMoved);
+            		        this.position[0] += (this.tileTo[0]<this.tileFrom[0]) ? 0-diff:diff;
+            		             }
 
-                      if(this.tileTo[1]!=this.tileFrom[1]){
-                        var diff = (tileH/this.delay)*(t-this.timeMoved);
-                        this.position[1] += (this.tileTo[1]<this.tileFrom[1]) ? 0-diff:diff;
-                             }       
-                this.position[0] = Math.round(this.position[0]);
-                this.position[1] = Math.round(this.position[1]);
+                    	if(this.tileTo[1]!=this.tileFrom[1]){
+                    		var diff = (tileH/this.delay)*(t-this.timeMoved);
+            		        this.position[1] += (this.tileTo[1]<this.tileFrom[1]) ? 0-diff:diff;
+            		             }	     
+            		this.position[0] = Math.round(this.position[0]);
+            		this.position[1] = Math.round(this.position[1]);
 
-              }
-                     
+            	}
+            		     
                 return true;
 
             }
 
             function toIndex(x,y){
-              return (x+(y*mapW));
+            	return (x+(y*mapW));
             }
 
-
+/*
+                var enemys =  {
+                 x: 220,
+                 y: 255,
+                 width: 40,
+                 height: 30,
+                 velocityX: 3,
+               
+                 //
+                 draw: function(ox,oy) {
       
+                   ctx.fillStyle = "34e00f";
+                   ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);                   
+         
+                 },
+                 move: function(ox,oy){
+                    if(this.x+this.velocityX>450){
+                     this.velocityX = -3;
+                    }
+                    else if(this.x+ex<150){
+                     this.velocityX = 3;
+                    }
+                    this.x += this.velocityX;
+              
+                   this.draw(ox,oy);
 
-                function enemy(x,y,width,height,velocityX,velocityY){
+                 },
+
+                 
+
+                 }
+
+                
+
+                var enemyBullets = {
+                  x: 220,
+                  y: 255,
+                  velocityX: 3.5,
+                  height: 5,
+                  width: 15,
+
+                  drawB: function(bx,by){
+                   ctx.fillStyle = "0ed00e";
+                   ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
+                   ctx.fill();
+                  },
+                  moveB: function(bx,by){
+                  if(this.x-this.velocityX<35){
+                    this.x = 220;
+                    player_status = true;
+                  }
+
+                  this.x -= this.velocityX;
+
+                  this.drawB(bx,by);
+                  }
+
+                };*/
+
+
+                function enemy(x,y,width,height,velocityX){
                   this.x = x;
                   this.y = y;
                   this.width = width;
                   this.height = height;
                   this.velocityX = velocityX;
-                  this.velocityY = velocityY;
 
 
                  }
@@ -297,35 +353,13 @@
                   if(this.x+this.velocityX>335){
                      this.velocityX = -3;
                     }
-                    else if(this.x+this.velocityX<100){
+                    else if(this.x+ex<100){
                      this.velocityX = 3;
                     }
-
-                /*    if(this.y+this.velocityY>500){
-                      this.velocityY = -3;
-
-                    }
-                    else if(this.y+this.velocityY<150){
-                      this.velocityY = 3;
-                    }*/
                     this.x += this.velocityX;
               
                    this.draw(ox,oy);
                 };
-
-
-                enemy.prototype.moveY = function(ox,oy){
-                  this.y += this.velocityY;
-                  if(this.y+this.velocityY>500){
-                    this.velocityY = -3;
-                  }
-                  else if(this.y+this.velocityY<100){
-                    this.velocityY = 3
-                  }
-
-                  this.draw(ox,oy);
-
-                }
 
                 function enemyBullet(x,y,width,height,velocityX){
                   this.x = x;
@@ -333,7 +367,7 @@
                   this.width = width;
                   this.height = height;
                   this.velocityX = velocityX;
-               
+
                 }
                 enemyBullet.prototype.drawB = function(bx,by){
 
@@ -349,37 +383,18 @@
                      player_status = true;
                   }
 
-                 /* if(this.y+this.velocityY>400){
-                    this.y = enemy.y ;
-                    player_status = true;
-                  }*/
-
-
                   // this.x = enemy.x;
                    this.x -= this.velocityX;
-                 //  this.y += this.velocityY;
                    this.drawB(bx,by);
                   
 
                 };
-                enemyBullet.prototype.moveBVertical = function(bx,by){
-                  if(this.y-this.velocityY<100){
-                    this.y = enemyV;
-                  }
-                    this.y -= this.velocityY;
-                    this.drawB(bx,by);
-                }
 
-                var enemys = new enemy(220,245,30,30,3,0);               
-                var enemyBullets = new enemyBullet(enemys.x,255,15,5,3,0);
+                var enemys = new enemy(220,245,30,30,3);               
+                var enemyBullets = new enemyBullet(enemys.x,255,15,5,3);
 
-                var enemyFinal = new enemy(550,805,30,30,3,0);
-                var enemyBulletFinal = new enemyBullet(enemyFinal.x,820,15,5,3,0);
-
-                //var enemyVertical = new enemy(300,400,30,30,0,3);
-               // var enemyBulletVertical = new enemy(300,400,15,5,0,3);
-               var enemyV = new enemy(885,140,30,30,0,3);
-               var enemyBulletV = new enemyBullet(840,140,15,5,0,3);
+                var enemyFinal = new enemy(550,805,30,30,3);
+                var enemyBulletFinal = new enemyBullet(enemyFinal.x,820,15,5,3);
                 
                 
                 
@@ -436,10 +451,10 @@
    
 
 
-                  window.addEventListener("keyup",function(e){
+        	        window.addEventListener("keyup",function(e){
                      if(e.keyCode>=37&&e.keyCode<=40){
 
-                        keysDown[e.keyCode] = false;
+              	        keysDown[e.keyCode] = false;
                       }
 
                      if(e.keyCode==32&&status==0){
@@ -448,12 +463,12 @@
                          status++;
                       }
                   
-              });
+        	    });
 
-                  window.addEventListener("keydown",function(e){
+                	window.addEventListener("keydown",function(e){
                      if(e.keyCode>=37&&e.keyCode<=40){
 
-                         keysDown[e.keyCode] = true;
+              	         keysDown[e.keyCode] = true;
                          steps++;
              //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
                       }
@@ -466,11 +481,11 @@
                          info.style.display = "none";                 
                          status++;
                       }
-              });
+            	});
 
           
 
-                   viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
+        	         viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
         };  
          
 
@@ -521,7 +536,7 @@
                           
                        if(ctx==null){
               
-                          return;
+              	          return;
                            }
 
               var currentFrameTime = Date.now();
@@ -532,15 +547,15 @@
       
 
               if(currentSecond!=sec){
-                currentSecond = sec;
-                framesLastSecond = frameCount;
-                frameCount = 1
+              	currentSecond = sec;
+              	framesLastSecond = frameCount;
+              	frameCount = 1
                 }
 
 
 
               else{
-                frameCount++;
+              	frameCount++;
                 player_enemy = true;
                }
 
@@ -549,15 +564,15 @@
               if(!player.processMovement(currentFrameTime)){
                 
 
-                // *We check for 3 conditions before moving the character to a tile
-                //* if the right key is pressed, if it's position is not out of bounds and if the new position is ascessable 
+              	// *We check for 3 conditions before moving the character to a tile
+              	//* if the right key is pressed, if it's position is not out of bounds and if the new position is ascessable 
 
                 if(keysDown[37]&&player.tileFrom[0]>0){
 
                   if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
                       player.tileTo[0] -= 1;
                             }
-                  //to move to the left
+                	//to move to the left
 
                    else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==3){
                       player.tileTo[0] -= 1;
@@ -574,7 +589,7 @@
                             }
                     else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){
                     
-                      player.delay -= 350;
+                      player.delay -= 450;
                       gameMap[toIndex(player.tileTo[0]-1,player.tileTo[1])]=1;
                       player.tileTo[0] -= 1;
                     
@@ -600,7 +615,7 @@
                             }
                     else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==8){
 
-                       player.delay -= 350;
+                       player.delay -= 450;
                        energyLevel += 100;
                        player.tileTo[1] -= 1;
                        gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
@@ -658,7 +673,7 @@
 
                   else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==8){
                       energyLevel += 100;
-                      player.delay -= 350;
+                      player.delay -= 450;
                       gameMap[toIndex(player.tileTo[0]+1,player.tileTo[1])]=1;
                       player.tileTo[0] += 1;
                             }    
@@ -692,7 +707,7 @@
                             }
                   else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==8){
                   
-                      player.delay -= 350;
+                      player.delay -= 450;
                       gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
                       player.tileTo[1]+= 1;
             
@@ -722,20 +737,20 @@
 
 
               for(var y = viewport.startTile[1]; y<viewport.endTile[1];y++){
-                for(var x =viewport.startTile[0];x<viewport.endTile[0];x++){
+              	for(var x =viewport.startTile[0];x<viewport.endTile[0];x++){
                  // gameMap = plan[i].layout;
                   mapIndex = (y*mapW+x);
                   
                   dy = 0;
             
 
-                  switch(gameMap[mapIndex])
-                  {
-                  case 0:
-                     ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
+              		switch(gameMap[mapIndex])
+              		{
+              		case 0:
+					           ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
                      ctx.fillStyle = "#00000b";
                      //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
-                    break;
+					          break;
 
                   case 3:                     
                      ctx.fillStyle = "#08af4b";
@@ -768,15 +783,15 @@
                      ctx.drawImage(powerUpPic,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      break;  
 
-                   default:
-                       ctx.fillStyle = "#ccffcc";
-                        //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+				           default:
+					             ctx.fillStyle = "#ccffcc";
+					              //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                        ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      
-                  }
+              		}
 
-                  
-                }
+              		
+              	}
               }
 
               ctx.fillStyle = "#FF00ff";
@@ -810,8 +825,8 @@
               enemyInitialize++;*/
             
 
-            ctx.fillStyle = "#ff0000";
-            ctx.fillText("FPS: " + framesLastSecond, 10, 20);
+	          ctx.fillStyle = "#ff0000";
+	          ctx.fillText("FPS: " + framesLastSecond, 10, 20);
 
             ctx.fillStyle = "#ff0000";
             ctx.fillText("Coin: " + coinCollected, 10, 30);
@@ -823,7 +838,7 @@
            //  ctx.fillRect(enemy.x+viewport.offSet[0],enemy.y+viewport.offSet[1],enemy.width,enemy.height);                   
             //enemy.draw();
             
-           gamePlay =  requestAnimationFrame(function(){
+	         gamePlay =  requestAnimationFrame(function(){
            drawGame();
            //enemyBullets.x  = enemys.x;
            enemys.move(viewport.offSet[0],viewport.offSet[1]);
@@ -846,11 +861,6 @@
            enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
            colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
            colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-           enemyV.moveY(viewport.offSet[0],viewport.offSet[1]);
-           enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);
-
-
-
            
                  
             }
@@ -923,15 +933,7 @@
                         enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
                         colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
                         colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-                        enemyV.moveY(viewport.offSet[0],viewport.offSet[1]);
-                        enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);
-
-                       /* enemyBulletVertical.moveB(viewport.offSet[0],viewport.offSet[1]);
-                        enemyVertical.move(viewport.offSet[0],viewport.offSet[1]);
-                        colliosionBullet(enemyBulletVertical.x,enemyBulletVertical.y,enemyBulletVertical.width,enemyBulletVertical.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
-                        colliosionEnemy(enemyVertical.x,enemyVertical.y,enemyVertical.width,enemyVertical.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-                        }*/
-                      }
+                        }
 
               });
           
