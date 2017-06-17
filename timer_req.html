@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id = "time"></div>
+<script type="text/javascript">
+
+
+var start = true;     // flags that you want the countdown to start
+var stopIn = 300000;    // how long the timer should run
+var stopTime = 0;     // used to hold the stop time
+var stop = false;     // flag to indicate that stop time has been reached
+var timeTillStop = 0; // holds the display time
+
+// main update function
+function update(timer){
+
+    if(start){  // do we need to start the timer
+        stopTime = timer + stopIn; // yes the set the stoptime
+        start = false;             // clear the start flag
+    }else{                         // waiting for stop
+        if(timer >= stopTime){     // has stop time been reached?
+            stop = true;           // yes the flag to stop
+        }
+
+    }
+   // document.getElementById("time").textContent = timer;
+    //console.log(timer);
+
+    timeTillStop = stopTime - timer;      // for display of time till stop
+    // log() should be whatever you use to display the time.
+    document.getElementById("time").textContent = (Math.floor(timeTillStop / 10) );  // to display in 1/100th seconds
+
+    if(!stop){
+        requestAnimationFrame(update); // continue animation until stop 
+    }
+}
+requestAnimationFrame(update);  // start the animation
+ </script>
+</body>
+</html>
