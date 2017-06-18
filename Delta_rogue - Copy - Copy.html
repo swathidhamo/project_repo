@@ -271,7 +271,7 @@
         var enemyInitialize = 0;
 
         var treasures = new Array();
-       // var enemy = new Array();
+
         var alive = true;
         var offX,offY;
         var enemies;
@@ -282,6 +282,7 @@
         var faster = new Image;
         var player_enemy = true;
         faster.src = "https://t7.rbxcdn.com/bd821fbe293d415cbd3520697f835735";
+        var shootBullet = false;
 
 
 
@@ -398,6 +399,43 @@
 
             }
 
+
+            function characterBullet(x,y,width,height,velocityX){
+
+              this.x = x;
+              this.y = y;
+              this.width = width;
+              this.height = height;
+              this.velocityX = velocityX;
+
+            }
+
+
+            characterBullet.prototype.draw = function(px,py){
+
+              ctx.fillStyle = "0ed00e";
+              ctx.fillRect(this.x+px,this.y+py,this.width,this.height);
+              ctx.fill();
+              
+            }
+
+            characterBullet.prototype.shoot = function(px,py){
+
+              if(direction==3){//shoot to the right
+                this.x += this.velocityX;
+              }
+
+
+              else if(direction==2){
+                this.x -= this.velocityX;
+              }
+              //console.log(this.x);
+                //this.x += this.velocityX;
+              this.draw(px,py);
+            }
+
+             var playerBullet = new characterBullet(player.position[0]+15,player.position[1]+10,19,7,4.5);
+
             function toIndex(x,y){
               return (x+(y*mapW));
             }
@@ -468,8 +506,8 @@
             enemyBullet.prototype.drawB = function(bx,by){
 
                   ctx.fillStyle = "0ed00e";
-                   ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
-                   ctx.fill();
+                  ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
+                  ctx.fill();
                     
                 };
 
@@ -580,6 +618,11 @@
                          spaceBarPressed = false;
                          status++;
                       }
+                      else if(e.keyCode==32&&status!=0){
+                         shootBullet = false;
+                         playerBullet.x = player.position[0];
+                         playerBullet.y = player.position[1];
+                      }
                   
               });
 
@@ -603,6 +646,10 @@
                          info.style.display = "none";                 
                          status++;
                       }
+
+                      else if(e.keyCode==32&&status!=0){
+                        shootBullet = true;
+                                            }
               });
 
           
@@ -861,10 +908,20 @@
                        player.timeMoved = currentFrameTime;
                    }
 
+
+                  if(shootBullet){
+                    playerBullet.x = player.position[0]+15;
+                    playerBullet.y = player.position[1]+15;
+                    playerBullet.shoot(viewport.offSet[0],viewport.offSet[1]);
+                  }
+
                   } 
+
                   viewport.update(player.position[0]+(player.dimension[0]/2),player.position[1]+(player.dimension[1]/2));   
                   ctx.fillStyle = "#000000";
                   ctx.fillRect(0,0,viewport.screen[0],viewport.screen[1]);
+
+
 
 
 
@@ -973,9 +1030,10 @@
             
            gamePlay =  requestAnimationFrame(function(){
            drawGame();
-           draw();
+           drawSprite();
            //enemyBullets.x  = enemys.x;
            enemys.move(viewport.offSet[0],viewport.offSet[1]);
+           playerBullet.shoot(viewport.offSet[0],viewport.offSet[1]);
           
 
            enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
@@ -1055,9 +1113,10 @@
               energyLevel  =100;
               gamePlay = requestAnimationFrame(function(){
               drawGame();
-              draw();
+              drawSprite();
                  //enemyBullets.x = enemy.x;
               enemys.move(viewport.offSet[0],viewport.offSet[1]);
+              playerBullet.shoot(viewport.offSet[0],offSet[1]);
                  
               enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
                  
@@ -1104,21 +1163,15 @@
                 var direction = 0;
                 image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
          
-                function draw(){
+                function drawSprite(){
                 ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
                 ctx.drawImage(image, width*currentFrame +20 , height * direction+7, width, height, player.position[0]+viewport.offSet[0],player.position[0]+viewport.offSet[0] , player.dimension[0]+25,player.dimension[1]+25);
-                console.log(currentFrame);
+            
          
-               /* if (currentFrame == frames) {
-                  currentFrame = 0;
-                } 
-                else {
-                  currentFrame++;
-                }
-*/
+     
         }
          
-        //setInterval(draw,100);
+
                  
 
 
