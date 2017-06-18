@@ -219,8 +219,8 @@
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 */
-        var tileH = 50;//tile height and width set to 40px
-        var tileW = 50;
+        var tileH = 40;//tile height and width set to 40px
+        var tileW = 40;
         var mapH; //number of tiles
         var mapW; 
         var currentSecond = 0, frameCount = 0, framesLastSecond = 0; var lastFrameTime = 0;
@@ -282,7 +282,6 @@
         var faster = new Image;
         var player_enemy = true;
         faster.src = "https://t7.rbxcdn.com/bd821fbe293d415cbd3520697f835735";
-
 
 
 
@@ -405,7 +404,7 @@
 
       
 
-            function enemy(x,y,width,height,velocityX,velocityY){
+                function enemy(x,y,width,height,velocityX,velocityY){
                   this.x = x;
                   this.y = y;
                   this.width = width;
@@ -416,14 +415,14 @@
 
                  }
 
-            enemy.prototype.draw = function(ox,oy){
+                enemy.prototype.draw = function(ox,oy){
 
                    ctx.fillStyle = "34e00f";
                    ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
                  
                 };
 
-            enemy.prototype.move = function(ox,oy){
+                enemy.prototype.move = function(ox,oy){
                   if(this.x+this.velocityX>335){
                      this.velocityX = -3;
                     }
@@ -444,7 +443,7 @@
                 };
 
 
-            enemy.prototype.moveY = function(ox,oy){
+                enemy.prototype.moveY = function(ox,oy){
                   this.y += this.velocityY;
                   if(this.y+this.velocityY>500){
                     this.velocityY = -3;
@@ -457,7 +456,7 @@
 
                 }
 
-            function enemyBullet(x,y,width,height,velocityX){
+                function enemyBullet(x,y,width,height,velocityX){
                   this.x = x;
                   this.y = y;
                   this.width = width;
@@ -465,15 +464,15 @@
                   this.velocityX = velocityX;
                
                 }
-            enemyBullet.prototype.drawB = function(bx,by){
+                enemyBullet.prototype.drawB = function(bx,by){
 
-                  ctx.fillStyle = "0ed00e";
+                   ctx.fillStyle = "0ed00e";
                    ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
                    ctx.fill();
                     
                 };
 
-            enemyBullet.prototype.moveB = function(bx,by){
+                enemyBullet.prototype.moveB = function(bx,by){
                    if(this.x-this.velocityX<35){
                      this.x = enemys.x;
                      player_status = true;
@@ -492,7 +491,7 @@
                   
 
                 };
-            enemyBullet.prototype.moveBVertical = function(bx,by){
+                enemyBullet.prototype.moveBVertical = function(bx,by){
                   if(this.y-this.velocityY<100){
                     this.y = enemyV;
                   }
@@ -515,7 +514,7 @@
                 
 
 
-            function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2){
+                function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2){
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_status){
                     energyLevel -= Math.round(100/3);
@@ -526,7 +525,7 @@
           
                  }
 
-            function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2){
+                function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2){
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy){
                     energyLevel -= Math.round(100/6);
@@ -540,7 +539,7 @@
 
 
 
-            function playerEnergy(){
+                function playerEnergy(){
                   if(energyLevel<0){
                   //  alert("you are dead so restart the game");
                     clearInterval(game[i]);
@@ -587,10 +586,6 @@
                      if(e.keyCode>=37&&e.keyCode<=40){
 
                          keysDown[e.keyCode] = true;
-                         currentFrame++;
-                         if(currentFrame==frames){
-                          currentFrame=0;
-                         }
                          steps++;
              //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
                       }
@@ -656,10 +651,7 @@
                      check();
                     }, 1000);
                   };
-
-
-
-                                     
+                 
                     function drawGame()
                     {   
                           
@@ -913,8 +905,8 @@
                      break;  
 
                    default:
-                       ctx.fillStyle = "#ffffff";
-                       //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                       ctx.fillStyle = "#ccffcc";
+                        //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                        ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      
                   }
@@ -926,8 +918,7 @@
               ctx.fillStyle = "#FF00ff";
               //ctx.fillRect(player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]);
               
-             // ctx.drawImage(player_Pic,player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]); 
-             //draw();
+              ctx.drawImage(player_Pic,player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]); 
              
 
                   
@@ -970,7 +961,6 @@
             
            gamePlay =  requestAnimationFrame(function(){
            drawGame();
-           draw();
            //enemyBullets.x  = enemys.x;
            enemys.move(viewport.offSet[0],viewport.offSet[1]);
           
@@ -1051,22 +1041,21 @@
               display = document.querySelector('#time');
               energyLevel  =100;
               gamePlay = requestAnimationFrame(function(){
-              drawGame();
-              draw();
+                 drawGame();
                  //enemyBullets.x = enemy.x;
-              enemys.move(viewport.offSet[0],viewport.offSet[1]);
+                 enemys.move(viewport.offSet[0],viewport.offSet[1]);
                  
-              enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
+                 enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
                  
                  //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
             
-              colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                   colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
                   
                 
-              colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+                   colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
                   
-              playerEnergy();
-                  if(i==2){
+                    playerEnergy();
+                      if(i==2){
                         enemyBulletFinal.moveB(viewport.offSet[0],viewport.offSet[1]);
                         enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
                         colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
@@ -1086,36 +1075,6 @@
 
 
         }
-
-
-                var width = 100,
-                height = 120,
-                frames = 4,
-                 
-                currentFrame = 0,
-                 
-                canvas = document.getElementById("canvas");
-                ctx = canvas.getContext("2d");
-                image = new Image()
-                image.src = "https://s-media-cache-ak0.pinimg.com/236x/13/f4/b5/13f4b530750e77f20978372ba73e0f60.jpg";
-         
-                function draw(){
-                ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
-                ctx.drawImage(image, 0, height * currentFrame, width, height, player.position[0]+viewport.offSet[0],player.position[0]+viewport.offSet[0] , player.dimension[0],player.dimension[1]);
-                console.log(currentFrame);
-         
-               /* if (currentFrame == frames) {
-                  currentFrame = 0;
-                } 
-                else {
-                  currentFrame++;
-                }
-*/
-        }
-         
-        //setInterval(draw,100);
-                 
-
 
 
         
