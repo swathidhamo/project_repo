@@ -698,6 +698,7 @@
 
                 if(keysDown[37]&&player.tileFrom[0]>0){
 
+                   direction = 2;
                   if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
                       player.tileTo[0] -= 1;
                             }
@@ -738,7 +739,7 @@
                                         
                   //to move up
                 else if(keysDown[38]&&player.tileFrom[1]>0){
-                 
+                 direction = 1;
                   if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
                       player.tileTo[1] -= 1;
                             }
@@ -782,6 +783,7 @@
 
       
                 else if(keysDown[39]&&player.tileFrom[0]<(mapW-1)){
+                  direction = 3;
 
                   if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==1){
                       player.tileTo[0] += 1;//to move to the right
@@ -815,6 +817,7 @@
                   }
 
                 else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)) {
+                  direction = 0;
 
                   if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==1){
                       player.tileTo[1] += 1;// to move down
@@ -1088,20 +1091,22 @@
         }
 
 
-                var width = 100,
-                height = 120,
-                frames = 4,
+                var width = 150,
+                height = 127,
+                frames = 7,
                  
                 currentFrame = 0,
+
                  
                 canvas = document.getElementById("canvas");
                 ctx = canvas.getContext("2d");
-                image = new Image()
-                image.src = "https://s-media-cache-ak0.pinimg.com/236x/13/f4/b5/13f4b530750e77f20978372ba73e0f60.jpg";
+                image = new Image();
+                var direction = 0;
+                image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
          
                 function draw(){
                 ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
-                ctx.drawImage(image, 0, height * currentFrame, width, height, player.position[0]+viewport.offSet[0],player.position[0]+viewport.offSet[0] , player.dimension[0],player.dimension[1]);
+                ctx.drawImage(image, width*currentFrame +20 , height * direction+7, width, height, player.position[0]+viewport.offSet[0],player.position[0]+viewport.offSet[0] , player.dimension[0]+25,player.dimension[1]+25);
                 console.log(currentFrame);
          
                /* if (currentFrame == frames) {
