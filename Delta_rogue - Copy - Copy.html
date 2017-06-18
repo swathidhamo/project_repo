@@ -83,22 +83,7 @@
           array[j][i] = 0;
           
         }
-        else if(i%n==0){
-          array[j][i] = 0;
-          if(random>=0.51&&i%13==0  && exit<=2){
-            array[j][i] =  3;
-            exit++;
-          }
-          
-        }
-        else if((i+1)%n==0){
-          array[j][i] = 0;
-          if(random<0.51&&i%13==0 && exit<=2){
-            array[j][i] = 3;
-            exit++;
-          }
-          
-        }
+
 
         //now we generate a random matrix inside this (n-2)*(n-2) array
 
@@ -108,21 +93,40 @@
         else if(random>0.65&&random<0.85){
           array[j][i] = 0;
         }
-        else if(random>0.85&&random<0.94){
+        else if(random>0.90&&random<0.94){
           array[j][i] = 6;
         }
-        else if(random>0.94){
+        else if(random>0.97){
           if(random_e>0.51){
             array[j][i] = 8;
 
           }
           else{
             array[j][i] = 9;
-          }
+            }
           }
 
            if(i==(n+1)){
           array[j][i] = 1;
+        }
+
+         else if(i%n==0){
+          array[j][i] = 0;
+          if(random>=0.51&&i%13==0  && exit<=2&&i!=0){
+            array[j][i] =  3;
+            array[j][i-1] = 1;
+            exit++;
+          }
+          
+        }
+        else if((i+1)%n==0){
+          array[j][i] = 0;
+          if(random<0.51&&i%13==0 && exit<=2&&i!=0){
+            array[j][i] = 3;
+            exit++;
+            array[j][i-1] = 1;
+          }
+          
         }
         /*if(i==(n+1)||i==(n+2) ){
           array[j][i] = 1;
@@ -133,9 +137,9 @@
     
         }
           
-       // var  Map0 = array[0];
-        var Map1 = array[1];
-        var Map2 = array[2];
+      // var  Map0 = array[0];
+        //var Map1 = array[1];
+        //var Map2 = array[2];
 
 
 
@@ -167,7 +171,7 @@
 
 
 
-    /*    var Map1 = [
+      var Map1 = [
   4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 0,
   0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 8, 1, 1, 0, 1, 0, 1, 0, 0, 0,
@@ -218,9 +222,9 @@
   3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
-*/
-        var tileH = 50;//tile height and width set to 40px
-        var tileW = 50;
+
+        var tileH = 40;//tile height and width set to 40px
+        var tileW = 40;
         var mapH; //number of tiles
         var mapW; 
         var currentSecond = 0, frameCount = 0, framesLastSecond = 0; var lastFrameTime = 0;
@@ -271,6 +275,8 @@
         var enemyInitialize = 0;
 
         var treasures = new Array();
+        var enemies = new Array();
+        var bulletEnemy = new Array();
 
         var alive = true;
         var offX,offY;
@@ -283,6 +289,8 @@
         var player_enemy = true;
         faster.src = "https://t7.rbxcdn.com/bd821fbe293d415cbd3520697f835735";
         var shootBullet = false;
+        var eneX, eneY, eneV;
+
 
 
 
@@ -421,27 +429,41 @@
 
             characterBullet.prototype.shoot = function(px,py){
 
-              if(direction==3){//shoot to the right
-                this.x += this.velocityX;
+              if(direction==3&&this.x==player.position[0]){//shoot to the right
+                this.velocityX = this.velocityX;
               }
 
-
-              else if(direction==2){
-                this.x -= this.velocityX;
+              else if(direction==2&&this.x==player.position[1]){
+                this.velocityX = -this.velocityX;
               }
               //console.log(this.x);
-                //this.x += this.velocityX;
+              this.x += this.velocityX;
               this.draw(px,py);
             }
 
-             var playerBullet = new characterBullet(player.position[0]+15,player.position[1]+10,19,7,4.5);
+             var playerBullet = new characterBullet(player.position[0],player.position[1],19,7,4.5);
 
             function toIndex(x,y){
               return (x+(y*mapW));
             }
 
 
-      
+               eneX = 220; 
+               eneY = 300;
+               eneV = 3;
+               for(j = 0;j<3;j++){
+                enemies[j] = new enemy(eneX,eneY,30,30,eneV,0);
+                bulletEnemy[j] = new enemyBullet(eneX,eneY,15,5,eneV,0);
+                eneX+= 130;
+                eneY+= 205;
+               }
+              //  var enemys = new enemy(220,300,30,30,3,0);               
+                //var enemyBullets = new enemyBullet(enemys.x,305,15,5,3,0);
+
+                //var enemyFinal = new enemy(550,805,30,30,3,0);
+                //var enemyBulletFinal = new enemyBullet(enemyFinal.x,820,15,5,3,0);  
+
+
 
             function enemy(x,y,width,height,velocityX,velocityY){
                   this.x = x;
@@ -454,19 +476,29 @@
 
                  }
 
-            enemy.prototype.draw = function(ox,oy){
+            enemy.prototype.draw = function(ox,oy,k){
 
                    ctx.fillStyle = "34e00f";
-                   ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
+                  // ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
+                  ctx.drawImage(imageEnemy,widthEnemy*directionEnemy, heightEnemy*currentFrameEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
                  
                 };
 
-            enemy.prototype.move = function(ox,oy){
+            enemy.prototype.move = function(ox,oy,k){
                   if(this.x+this.velocityX>335){
                      this.velocityX = -3;
+
                     }
                     else if(this.x+this.velocityX<100){
                      this.velocityX = 3;
+                    }
+
+                    if(currentFrameEnemy == framesEnemy){
+                      currentFrameEnemy = 0;
+
+                    }
+                    else{
+                      currentFrameEnemy++;
                     }
 
                 /*    if(this.y+this.velocityY>500){
@@ -478,7 +510,7 @@
                     }*/
                     this.x += this.velocityX;
               
-                   this.draw(ox,oy);
+                   this.draw(ox,oy,k);
                 };
 
 
@@ -486,9 +518,11 @@
                   this.y += this.velocityY;
                   if(this.y+this.velocityY>500){
                     this.velocityY = -3;
+                    directionEnemy = 1;
                   }
                   else if(this.y+this.velocityY<100){
-                    this.velocityY = 3
+                    this.velocityY = 3;
+                    directionEnemy = 3;
                   }
 
                   this.draw(ox,oy);
@@ -513,7 +547,7 @@
 
             enemyBullet.prototype.moveB = function(bx,by){
                    if(this.x-this.velocityX<35){
-                     this.x = enemys.x;
+                     this.x = enemies[i].x;
                      player_status = true;
                   }
 
@@ -538,15 +572,11 @@
                     this.drawB(bx,by);
                 }
 
-                var enemys = new enemy(220,245,30,30,3,0);               
-                var enemyBullets = new enemyBullet(enemys.x,255,15,5,3,0);
-
-                var enemyFinal = new enemy(550,805,30,30,3,0);
-                var enemyBulletFinal = new enemyBullet(enemyFinal.x,820,15,5,3,0);
+                
 
                 //var enemyVertical = new enemy(300,400,30,30,0,3);
                // var enemyBulletVertical = new enemy(300,400,15,5,0,3);
-               var enemyV = new enemy(885,140,30,30,0,3);
+               var enemyV = new enemy(885,140,40,40,0,3);
                var enemyBulletV = new enemyBullet(840,140,15,5,0,3);
                 
                 
@@ -570,6 +600,23 @@
                     energyLevel -= Math.round(100/6);
                     player.delay += 50;
                     player_enemy = false;
+    
+                    
+                  }
+          
+                 }
+
+            function colliosionPlayer(x1,y1,w1,h1,x2,y2,w2,h2,k){
+                 
+                  if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy){
+                    energyLevel += Math.round(100/6);
+                    console.log("youve killed him!!");
+                    //CHANGED HERE AND ADDED K
+                    //enemies[k].width = 0;
+                    //enemies[k].height = 0;
+                    bulletEnemy.width = enemies[k].width;
+                    bulletEnemy.height = enemies[k].height;
+                    
     
                     
                   }
@@ -654,7 +701,7 @@
 
           
 
-                   viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
+                  viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
         };  
          
 
@@ -910,9 +957,9 @@
 
 
                   if(shootBullet){
-                    playerBullet.x = player.position[0]+15;
-                    playerBullet.y = player.position[1]+15;
-                    playerBullet.shoot(viewport.offSet[0],viewport.offSet[1]);
+                    playerBullet.x = player.position[0];
+                    playerBullet.y = player.position[1];
+                    //playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
                   }
 
                   } 
@@ -1032,35 +1079,41 @@
            drawGame();
            drawSprite();
            //enemyBullets.x  = enemys.x;
-           enemys.move(viewport.offSet[0],viewport.offSet[1]);
-           playerBullet.shoot(viewport.offSet[0],viewport.offSet[1]);
+           //enemies[i].move(viewport.offSet[0],viewport.offSet[1]);
+           playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
           
 
-           enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
+           //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);
            
             //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
+            //CHANGED HERE TOOOO
           
+              for(k=0;k<=i;k++){
+                bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1]); 
+               enemies[k].move(viewport.offSet[0]+10,viewport.offSet[1]+15,k); 
 
           
-              colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-           playerEnergy();
+              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              playerEnergy();
         
-            colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-           playerEnergy();
-
-           if(i==2){
+              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height);
+              playerEnergy();
+             }
+       ///THIS PART TOO
+          /* if(i==2){
            enemyBulletFinal.moveB(viewport.offSet[0],viewport.offSet[1]);
            enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
            colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
            colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
            enemyV.moveY(viewport.offSet[0],viewport.offSet[1]);
-           enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);
+           enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);}*/
 
 
 
            
                  
-            }
+            
 
            //enemyBullet.move();
            });
@@ -1077,7 +1130,9 @@
 
              if(levelStatus==i+1){
               i++;
-              if(i==1){
+
+              /*if(i==1){
+              enemys.width = 30, enemy.height = 30, enemyBullets.width = 15,enemyBullets.height = 5;
               enemys.x += 100;
               enemys.y += 40;
               enemyBullets.x += 100;
@@ -1089,9 +1144,10 @@
                 enemys.y += 240;
                 enemyBullets.x += 390;
                 enemyBullets.y += 240;
+                enemys.width = 30, enemy.height = 30, enemyBullets.width = 15,enemyBullets.height = 5;
 
-               }
-               else if(i==3){
+               }*/
+               if(i==3){
                 alert("You've won");
                }
 
@@ -1106,6 +1162,9 @@
               player.delay = 700;
             
               player.placeAt(1,1);
+         
+                  
+              
               //player.position = [350,350];
          
               plan[i].clock(fiveMinutes, display,i);
@@ -1114,18 +1173,33 @@
               gamePlay = requestAnimationFrame(function(){
               drawGame();
               drawSprite();
+
                  //enemyBullets.x = enemy.x;
-              enemys.move(viewport.offSet[0],viewport.offSet[1]);
-              playerBullet.shoot(viewport.offSet[0],offSet[1]);
+              //enemies[i].move(viewport.offSet[0],viewport.offSet[1]);
+              playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
                  
-              enemyBullets.moveB(viewport.offSet[0],viewport.offSet[1]);
+              //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);
+
+
+               for(k=0;k<=i;k++){
+               bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1]); 
+               enemies[k].move(viewport.offSet[0]+10,viewport.offSet[1]+15,k); 
+          
+              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              playerEnergy();
+        
+              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height);
+              playerEnergy();
+             }
                  
                  //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
             
-              colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              /*colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
                   
                 
               colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              colliosionPlayer(enemys.x,enemys.y,enemys.width,enemys.height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height);
                   
               playerEnergy();
                   if(i==2){
@@ -1133,6 +1207,7 @@
                         enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
                         colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
                         colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+
                         enemyV.moveY(viewport.offSet[0],viewport.offSet[1]);
                         enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);
 
@@ -1140,8 +1215,8 @@
                         enemyVertical.move(viewport.offSet[0],viewport.offSet[1]);
                         colliosionBullet(enemyBulletVertical.x,enemyBulletVertical.y,enemyBulletVertical.width,enemyBulletVertical.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
                         colliosionEnemy(enemyVertical.x,enemyVertical.y,enemyVertical.width,enemyVertical.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-                        }*/
-                      }
+                        }}*/
+                      
 
               });
           
@@ -1160,12 +1235,17 @@
                 canvas = document.getElementById("canvas");
                 ctx = canvas.getContext("2d");
                 image = new Image();
-                var direction = 0;
+                var imageEnemy = new Image();
+                imageEnemy.src = "https://www.chronocompendium.com/images/wiki/2/27/Free_Lancer_Sprites.png";
+                var direction = 0, directionEnemy = 0;
+                var currentFrameEnemy = 0, framesEnemy = 5,widthEnemy = 40, heightEnemy = 40;
                 image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
          
                 function drawSprite(){
                 ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
-                ctx.drawImage(image, width*currentFrame +20 , height * direction+7, width, height, player.position[0]+viewport.offSet[0],player.position[0]+viewport.offSet[0] , player.dimension[0]+25,player.dimension[1]+25);
+                ctx.drawImage(image, width*currentFrame +20 , height * direction +7, width, height, player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1] , player.dimension[0]+25,player.dimension[1]+25);
+
+                //ctx.drawImage(imageEnemy,widthEnemy*directionEnemy,heightEnemy*currentFrameEnemy,widthEnemy,heightEnemy,enemies[i].x+viewport.offSet[0],enemies[i].y+viewport.offSet[1],enemies[i].width,enemies.height);
             
          
      
