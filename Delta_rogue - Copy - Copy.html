@@ -144,33 +144,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       var Map1 = [
   4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 0,
@@ -229,15 +202,11 @@
         var mapW; 
         var currentSecond = 0, frameCount = 0, framesLastSecond = 0; var lastFrameTime = 0;
         var player = new Character();
-        var brick = new Image;
+        
         var wallPicture = new Array();
         wallPicture = [ "http://www.clker.com/cliparts/b/m/0/m/n/D/brick-wall-jail.svg",
-        "https://s-media-cache-ak0.pinimg.com/236x/b2/5c/4e/b25c4e97e3ea30acaf41cfafff2e8191.jpg","https://s-media-cache-ak0.pinimg.com/originals/0e/98/9b/0e989bc5eae0aa4382e6ab07300b7b04.jpg"];
-        var walkingArea = new Image;
-        walkingArea.src = "https://s-media-cache-ak0.pinimg.com/736x/90/fc/e6/90fce6e9c6bd9581c6e10b5e1e75705f.jpg ";
+        "https://s-media-cache-ak0.pinimg.com/236x/b2/5c/4e/b25c4e97e3ea30acaf41cfafff2e8191.jpg","https://s-media-cache-ak0.pinimg.com/originals/0e/98/9b/0e989bc5eae0aa4382e6ab07300b7b04.jpg"]; 
         //brick.src = wallPicture[0];
-        var player_Pic = new Image;
-        player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
         var exit;
         var timeStart,gameTime = 0;
         var k =0;
@@ -257,26 +226,24 @@
         var enemyMotion = 0;
         var current_map = [];
          current_map = "Map"+n;
-        var plan = new Array();
-        var layouts = [Map0,Map1,Map2];
-        var game = new Array();
-        var timers = new Array();
-        var coin = new Image;
-        coin.src = "http://www.clker.com/cliparts/y/v/9/N/0/x/treasure-chest-hi.png";
-        var coinCollected = 0;
-        var powerUpPic = new Image;
-        powerUpPic.src = "https://previews.123rf.com/images/lineartestpilot/lineartestpilot1410/lineartestpilot141004558/32623054-cartoon-fizzy-drink-Stock-Photo.jpg";
+         var coinCollected = 0;
+       
+         
         var energyLevel = 200;
         var steps = 0;
         var exitX, exitY;
         
-        var enemy_pic = new Image;
-        enemy_pic.src = "https://s3.amazonaws.com/gameartpartnersimagehost/wp-content/uploads/2016/10/Fatty-Slug-Bug-featured.png";
+       
+        
         var enemyInitialize = 0;
 
         var treasures = new Array();
         var enemies = new Array();
         var bulletEnemy = new Array();
+        var plan = new Array();
+        var layouts = [Map0,Map1,Map2];
+        var game = new Array();
+        var timers = new Array();
 
         var alive = true;
         var offX,offY;
@@ -285,14 +252,51 @@
         var pos_1, pos_2, temp;
         var ex = 10;
         var player_status = true;
-        var faster = new Image;
+        
         var player_enemy = true;
-        faster.src = "https://t7.rbxcdn.com/bd821fbe293d415cbd3520697f835735";
+                
         var shootBullet = false;
+        var statusEnemies = true;
         var eneX, eneY, eneV;
+        var coin = new Image;
+        var player_Pic = new Image;
+        var powerUpPic = new Image;
+        var faster = new Image;
+        var enemy_pic = new Image;
+        var walkingArea = new Image;
+        var brick = new Image;
+        walkingArea.src = "https://s-media-cache-ak0.pinimg.com/736x/90/fc/e6/90fce6e9c6bd9581c6e10b5e1e75705f.jpg ";
+        coin.src = "http://www.clker.com/cliparts/y/v/9/N/0/x/treasure-chest-hi.png";
+        player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
+        powerUpPic.src = "https://previews.123rf.com/images/lineartestpilot/lineartestpilot1410/lineartestpilot141004558/32623054-cartoon-fizzy-drink-Stock-Photo.jpg";
+        faster.src = "https://t7.rbxcdn.com/bd821fbe293d415cbd3520697f835735";
+        enemy_pic.src = "https://s3.amazonaws.com/gameartpartnersimagehost/wp-content/uploads/2016/10/Fatty-Slug-Bug-featured.png";
+        var shootingSound;
+        var celebrationSound;
 
 
 
+        function sound(src) {
+          this.sound = document.createElement("audio");
+          this.sound.src = src;
+          this.sound.setAttribute("preload", "auto");
+          this.sound.setAttribute("controls", "none");
+          this.sound.style.display = "none";
+          document.body.appendChild(this.sound);
+          this.play = function(){
+
+            this.sound.play();
+            }
+          this.stop = function(){
+
+            this.sound.pause();
+            }
+          }
+
+
+          
+           shootingSound = new sound("Gun+Silencer.mp3");
+           celebrationSound = new sound("celebration.wav");
 
 
 
@@ -359,7 +363,7 @@
               this.tileFrom = [1,1];//position of the tile the character is moving from
               this.tileTo = [1,1];//position of the tile it is moving to
               this.timeMoved = 0; //time since it started moving
-              this.dimension = [30,30];//dimension of the character 
+              this.dimension = [32,32];//dimension of the character 
               this.position = [45,45];//absolute position of the character
               this.delay = 400; //700ms delay
           }
@@ -452,7 +456,7 @@
                eneY = 300;
                eneV = 3;
                for(j = 0;j<3;j++){
-                enemies[j] = new enemy(eneX,eneY,30,30,eneV,0);
+                enemies[j] = new enemy(eneX,eneY,30,30,eneV,0,true);
                 bulletEnemy[j] = new enemyBullet(eneX,eneY,15,5,eneV,0);
                 eneX+= 130;
                 eneY+= 205;
@@ -465,26 +469,29 @@
 
 
 
-            function enemy(x,y,width,height,velocityX,velocityY){
+            function enemy(x,y,width,height,velocityX,velocityY,status){
                   this.x = x;
                   this.y = y;
                   this.width = width;
                   this.height = height;
                   this.velocityX = velocityX;
                   this.velocityY = velocityY;
+                  this.status = true;
 
 
                  }
 
-            enemy.prototype.draw = function(ox,oy,k){
-
+            enemy.prototype.draw = function(ox,oy,k,statusEnemies){
+                   
+                   if(statusEnemies){
                    ctx.fillStyle = "34e00f";
                   // ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
                   ctx.drawImage(imageEnemy,widthEnemy*directionEnemy, heightEnemy*currentFrameEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
+                }
                  
                 };
 
-            enemy.prototype.move = function(ox,oy,k){
+            enemy.prototype.move = function(ox,oy,k,statusEnemies){
                   if(this.x+this.velocityX>335){
                      this.velocityX = -3;
 
@@ -510,7 +517,7 @@
                     }*/
                     this.x += this.velocityX;
               
-                   this.draw(ox,oy,k);
+                   this.draw(ox,oy,k,statusEnemies);
                 };
 
 
@@ -529,23 +536,26 @@
 
                 }
 
-            function enemyBullet(x,y,width,height,velocityX){
+            function enemyBullet(x,y,width,height,velocityX,status){
                   this.x = x;
                   this.y = y;
                   this.width = width;
                   this.height = height;
                   this.velocityX = velocityX;
+                  this.status = true;
                
                 }
-            enemyBullet.prototype.drawB = function(bx,by){
+            enemyBullet.prototype.drawB = function(bx,by,statusBullet){
 
+                  if(statusBullet){
                   ctx.fillStyle = "0ed00e";
                   ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
                   ctx.fill();
+                  }
                     
                 };
 
-            enemyBullet.prototype.moveB = function(bx,by){
+            enemyBullet.prototype.moveB = function(bx,by,statusBullet){
                    if(this.x-this.velocityX<35){
                      this.x = enemies[i].x;
                      player_status = true;
@@ -560,7 +570,7 @@
                   // this.x = enemy.x;
                    this.x -= this.velocityX;
                  //  this.y += this.velocityY;
-                   this.drawB(bx,by);
+                   this.drawB(bx,by,statusBullet);
                   
 
                 };
@@ -575,17 +585,17 @@
                 
 
                 //var enemyVertical = new enemy(300,400,30,30,0,3);
-               // var enemyBulletVertical = new enemy(300,400,15,5,0,3);
-               var enemyV = new enemy(885,140,40,40,0,3);
-               var enemyBulletV = new enemyBullet(840,140,15,5,0,3);
+                // var enemyBulletVertical = new enemy(300,400,15,5,0,3);
+                // var enemyV = new enemy(885,140,40,40,0,3);
+                // var enemyBulletV = new enemyBullet(840,140,15,5,0,3);
                 
                 
                 
 
 
-            function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2){
+            function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2,k){
                  
-                  if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_status){
+                  if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_status&&bulletEnemy[k].status){
                     energyLevel -= Math.round(100/3);
                     player.delay += 50;
                     player_status = false;
@@ -594,15 +604,15 @@
           
                  }
 
-            function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2){
+            function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2,k){
                  
-                  if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy){
+                  if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy&&enemies[k].status){
                     energyLevel -= Math.round(100/6);
                     player.delay += 50;
                     player_enemy = false;
     
                     
-                  }
+                   }
           
                  }
 
@@ -612,10 +622,9 @@
                     energyLevel += Math.round(100/6);
                     console.log("youve killed him!!");
                     //CHANGED HERE AND ADDED K
-                    //enemies[k].width = 0;
-                    //enemies[k].height = 0;
-                    bulletEnemy.width = enemies[k].width;
-                    bulletEnemy.height = enemies[k].height;
+                    enemies[k].status = false;
+                    bulletEnemy[k].status = false;
+
                     
     
                     
@@ -682,12 +691,12 @@
                           currentFrame=0;
                          }
                          steps++;
-             //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
+                        //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
                       }
                       if(e.keyCode==32&&status==0){
                          spaceBarPressed = true;
                          display = document.querySelector('#time');
-                         // gamePlay = requestAnimationFrame(drawGame);
+                         //gamePlay = requestAnimationFrame(drawGame);
                          updateLevel();       
                          var info = document.getElementById("instruction");
                          info.style.display = "none";                 
@@ -696,6 +705,7 @@
 
                       else if(e.keyCode==32&&status!=0){
                         shootBullet = true;
+                        shootingSound.play();
                                             }
               });
 
@@ -754,74 +764,72 @@
 
 
                                      
-                    function drawGame()
-                    {   
+             function drawGame(){   
                           
-                       if(ctx==null){
-              
-                          return;
-                           }
+                if(ctx==null){
+                    return;
+                      }
 
-              var currentFrameTime = Date.now();
-              var timeElapsed = currentFrameTime - lastFrameTime; 
-              gameTime += timeElapsed;                                  
-              var sec = Math.floor(Date.now()/1000);
+                var currentFrameTime = Date.now();
+                var timeElapsed = currentFrameTime - lastFrameTime; 
+                gameTime += timeElapsed;                                  
+                var sec = Math.floor(Date.now()/1000);
 
       
 
-              if(currentSecond!=sec){
+                if(currentSecond!=sec){
                 currentSecond = sec;
                 framesLastSecond = frameCount;
-                frameCount = 1
+                 frameCount = 1
+                 }
+
+
+
+                else{
+                frameCount++;
+                player_enemy = true;
                 }
 
 
 
-              else{
-                frameCount++;
-                player_enemy = true;
-               }
-
-
-
-              if(!player.processMovement(currentFrameTime)){
+                if(!player.processMovement(currentFrameTime)){
                 
 
                 // *We check for 3 conditions before moving the character to a tile
                 //* if the right key is pressed, if it's position is not out of bounds and if the new position is ascessable 
 
-                if(keysDown[37]&&player.tileFrom[0]>0){
+                    if(keysDown[37]&&player.tileFrom[0]>0){
 
-                   direction = 2;
-                  if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
-                      player.tileTo[0] -= 1;
+                        direction = 2;
+                      if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
+                          player.tileTo[0] -= 1;
                             }
                   //to move to the left
 
-                   else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==3){
-                      player.tileTo[0] -= 1;
-                      levelStatus++; 
-                      timer = 0;
-                      updateLevel();                                      
+                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==3){
+                        player.tileTo[0] -= 1;
+                        levelStatus++; 
+                        timer = 0;
+                        updateLevel();                                      
                             }//to check if the the next level exit has been reached
 
-                   else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==6){
-                      coinCollected++;
-                      player.tileTo[0] -= 1;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==6){
+                        coinCollected++;
+                        player.tileTo[0] -= 1;
+                        gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
-                    else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){
+                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){
                     
-                      player.delay -= 350;
-                      gameMap[toIndex(player.tileTo[0]-1,player.tileTo[1])]=1;
-                      player.tileTo[0] -= 1;
+                         player.delay -= 350;
+                         gameMap[toIndex(player.tileTo[0]-1,player.tileTo[1])]=1;
+                         player.tileTo[0] -= 1;
                     
                           }        
                       else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==9){
-                      energyLevel;
-                      player.tileTo[0] -= 1;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                          energyLevel;
+                          player.tileTo[0] -= 1;
+                          gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
      
@@ -834,44 +842,40 @@
                   //to move up
                 else if(keysDown[38]&&player.tileFrom[1]>0){
                  direction = 1;
-                  if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
-                      player.tileTo[1] -= 1;
+                      if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
+                          player.tileTo[1] -= 1;
                             }
-                    else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==8){
+                       else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==8){
 
-                       player.delay -= 350;
-                       energyLevel += 100;
-                       player.tileTo[1] -= 1;
-                       gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                          player.delay -= 350;
+                          energyLevel += 100;
+                          player.tileTo[1] -= 1;
+                          gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
                 
 
-                    }        
+                      }        
 
-                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==3){
-                      player.tileTo[1] -= 1;
-                      
-                      levelStatus++;
-                      timer = 0;
-                      updateLevel();
-                    
+                       else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==3){
+                            player.tileTo[1] -= 1;          
+                            levelStatus++;
+                            timer = 0;
+                            updateLevel();
                             }
-                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==6){
+                       else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==6){
           
-                      coinCollected++;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1]-1)]=1;
-                      player.tileTo[1] -= 1;
+                             coinCollected++;
+                             gameMap[toIndex(player.tileTo[0],player.tileTo[1]-1)]=1;
+                             player.tileTo[1] -= 1;
                       
-                    }
+                            }
 
-                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==9){
+                        else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==9){
           
-                      energyLevel = 100;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1]-1)]=1;
-                      player.tileTo[1] -= 1;
+                              energyLevel = 100;
+                              gameMap[toIndex(player.tileTo[0],player.tileTo[1]-1)]=1;
+                              player.tileTo[1] -= 1;
                       
-                    }  
-
-
+                           }  
 
                   }
 
@@ -879,75 +883,75 @@
                 else if(keysDown[39]&&player.tileFrom[0]<(mapW-1)){
                   direction = 3;
 
-                  if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==1){
-                      player.tileTo[0] += 1;//to move to the right
+                         if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==1){
+                              player.tileTo[0] += 1;//to move to the right
                             }
 
-                  else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==3){
-                      player.tileTo[0] += 1;
-                      levelStatus++;
-                      timer = 0;
-                      updateLevel();
+                          else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==3){
+                               player.tileTo[0] += 1;
+                               levelStatus++;
+                               timer = 0;
+                               updateLevel();
                     
                             } 
-                  else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==6){
-                      coinCollected++;
-                      player.tileTo[0] += 1;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                          else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==6){
+                                coinCollected++;
+                                player.tileTo[0] += 1;
+                                gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
                             }    
 
-                  else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==8){
-                      energyLevel += 100;
-                      player.delay -= 350;
-                      gameMap[toIndex(player.tileTo[0]+1,player.tileTo[1])]=1;
-                      player.tileTo[0] += 1;
+                          else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==8){
+                                energyLevel += 100;
+                                player.delay -= 350;
+                                gameMap[toIndex(player.tileTo[0]+1,player.tileTo[1])]=1;
+                                player.tileTo[0] += 1;
                             }    
-                  else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==9){
-                      energyLevel = 100;
-                      player.tileTo[0] += 1;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                          else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==9){
+                                energyLevel = 100;
+                                player.tileTo[0] += 1;
+                                gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
                             }                  
                                                   
                   }
 
-                else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)) {
-                  direction = 0;
+                  else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)) {
+                       direction = 0;
 
-                  if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==1){
-                      player.tileTo[1] += 1;// to move down
+                          if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==1){
+                                player.tileTo[1] += 1;// to move down
 
                             }
 
-                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==3){
-                      player.tileTo[1] += 1;
-                      levelStatus++;
-                      timer = 0;
-                      updateLevel();
+                           else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==3){
+                                 player.tileTo[1] += 1;
+                                 levelStatus++;
+                                 timer = 0;
+                                 updateLevel();
                     
                             } 
-                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==6){              
-                      coinCollected++;
-                      player.tileTo[1] += 1;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
+                            
+                            else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==6){ 
+
+                                  coinCollected++;
+                                  player.tileTo[1] += 1;
+                                  gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
-                  else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==8){
+                             else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==8){
                   
-                      player.delay -= 350;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
-                      player.tileTo[1]+= 1;
+                                  player.delay -= 350;
+                                  gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
+                                  player.tileTo[1]+= 1;
             
-                    }      
+                             }      
 
-                   else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==9){
+                             else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==9){
                   
-                      energyLevel = 100;
-                      gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
-                      player.tileTo[1]+= 1;
+                                   energyLevel = 100;
+                                   gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
+                                   player.tileTo[1]+= 1;
             
-                    }            
-
-
+                              }            
                    
                    }
 
@@ -956,17 +960,17 @@
                    }
 
 
-                  if(shootBullet){
-                    playerBullet.x = player.position[0];
-                    playerBullet.y = player.position[1];
+                if(shootBullet){
+                       playerBullet.x = player.position[0];
+                       playerBullet.y = player.position[1];
                     //playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
-                  }
+                   }
 
-                  } 
+                } 
 
-                  viewport.update(player.position[0]+(player.dimension[0]/2),player.position[1]+(player.dimension[1]/2));   
-                  ctx.fillStyle = "#000000";
-                  ctx.fillRect(0,0,viewport.screen[0],viewport.screen[1]);
+                viewport.update(player.position[0]+(player.dimension[0]/2),player.position[1]+(player.dimension[1]/2));   
+                ctx.fillStyle = "#000000";
+                ctx.fillRect(0,0,viewport.screen[0],viewport.screen[1]);
 
 
 
@@ -982,20 +986,20 @@
 
                   switch(gameMap[mapIndex])
                   {
-                  case 0:
+                   case 0:
                      ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
                      ctx.fillStyle = "#00000b";
                      //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
 
-                  case 3:                     
+                   case 3:                     
                      ctx.fillStyle = "#08af4b";
                      exitX = x; 
                      exitY = y; 
                      ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
 
-                  case 4:                     
+                   case 4:                     
                      ctx.fillStyle = "#0000ff";                                                           
                      ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
@@ -1005,11 +1009,9 @@
                      ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                 //     console.log(x*tileW+viewport.offSet[0]+" "+y*tileH+viewport.offSet[1]);
                     break;
-                          
-              
+
                    case 8:
-                     ctx.fillStyle = "#0e0d0ff";
-                     
+                     ctx.fillStyle = "#0e0d0ff";  
                      ctx.drawImage(faster,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      break;
 
@@ -1019,7 +1021,7 @@
                      ctx.drawImage(powerUpPic,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      break;  
 
-                   default:
+                    default:
                        ctx.fillStyle = "#ffffff";
                        //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                        ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
@@ -1027,7 +1029,7 @@
                   }
 
                   
-                }
+                 }
               }
 
               ctx.fillStyle = "#FF00ff";
@@ -1062,42 +1064,39 @@
               enemyInitialize++;*/
             
 
-            ctx.fillStyle = "#ff0000";
-            ctx.fillText("FPS: " + framesLastSecond, 10, 20);
+              ctx.fillStyle = "#ff0000";
+              ctx.fillText("FPS: " + framesLastSecond, 10, 20);
 
-            ctx.fillStyle = "#ff0000";
-            ctx.fillText("Coin: " + coinCollected, 10, 30);
+              ctx.fillStyle = "#ff0000";
+              ctx.fillText("Coin: " + coinCollected, 10, 30);
 
-            ctx.fillStyle = "#ff0000";
-            ctx.fillText("Energy: " + energyLevel + "%", 10, 40);
+              ctx.fillStyle = "#ff0000";
+              ctx.fillText("Energy: " + energyLevel + "%", 10, 40);
 
-             ctx.fillStyle = "34e00f";
-           //  ctx.fillRect(enemy.x+viewport.offSet[0],enemy.y+viewport.offSet[1],enemy.width,enemy.height);                   
+              ctx.fillStyle = "34e00f";
+            //  ctx.fillRect(enemy.x+viewport.offSet[0],enemy.y+viewport.offSet[1],enemy.width,enemy.height);                   
             //enemy.draw();
             
-           gamePlay =  requestAnimationFrame(function(){
-           drawGame();
-           drawSprite();
+              gamePlay =  requestAnimationFrame(function(){
+              drawGame();
+              drawSprite();
            //enemyBullets.x  = enemys.x;
            //enemies[i].move(viewport.offSet[0],viewport.offSet[1]);
-           playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
-          
-
-           //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);
-           
+              playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
+            //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);           
             //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
             //CHANGED HERE TOOOO
           
               for(k=0;k<=i;k++){
-                bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1]); 
-               enemies[k].move(viewport.offSet[0]+10,viewport.offSet[1]+15,k); 
+                bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
+               enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
 
           
-              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
               playerEnergy();
         
-              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height);
+              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
+              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height,k);
               playerEnergy();
              }
        ///THIS PART TOO
@@ -1130,6 +1129,11 @@
 
              if(levelStatus==i+1){
               i++;
+              for(var m = 0;m<i;m++){
+                 enemies[m].status = true;
+                 bulletEnemy[m].status = true;
+                }
+              celebrationSound.play();
 
               /*if(i==1){
               enemys.width = 30, enemy.height = 30, enemyBullets.width = 15,enemyBullets.height = 5;
@@ -1182,14 +1186,14 @@
 
 
                for(k=0;k<=i;k++){
-               bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1]); 
-               enemies[k].move(viewport.offSet[0]+10,viewport.offSet[1]+15,k); 
+               bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
+               enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
           
-              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
+              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
               playerEnergy();
         
-              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height);
+              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
+              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height,k);
               playerEnergy();
              }
                  
@@ -1243,7 +1247,8 @@
          
                 function drawSprite(){
                 ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
-                ctx.drawImage(image, width*currentFrame +20 , height * direction +7, width, height, player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1] , player.dimension[0]+25,player.dimension[1]+25);
+               // ctx.clearRect(enemies[k].x,enemies[k].y,enemies.width,enemies.height);
+                ctx.drawImage(image, width*currentFrame +20 , height * direction +7, width, height, player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1] , player.dimension[0],player.dimension[1]);
 
                 //ctx.drawImage(imageEnemy,widthEnemy*directionEnemy,heightEnemy*currentFrameEnemy,widthEnemy,heightEnemy,enemies[i].x+viewport.offSet[0],enemies[i].y+viewport.offSet[1],enemies[i].width,enemies.height);
             
