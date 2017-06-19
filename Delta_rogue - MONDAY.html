@@ -128,22 +128,18 @@
           }
           
         }
-
-
-
-    
         /*if(i==(n+1)||i==(n+2) ){
           array[j][i] = 1;
         }
 */
 
-          }
+       }
     
         }
           
-        // var  Map0 = array[0];
-         var Map1 = array[1];
-        var Map2 = array[2];
+      // var  Map0 = array[0];
+        //var Map1 = array[1];
+        //var Map2 = array[2];
 
 
 
@@ -258,11 +254,10 @@
         var player_status = true;
         
         var player_enemy = true;
-        var directionBullet;
                 
         var shootBullet = false;
         var statusEnemies = true;
-        var eneX, eneY, eneV,bneX, bneY;
+        var eneX, eneY, eneV;
         var coin = new Image;
         var player_Pic = new Image;
         var powerUpPic = new Image;
@@ -270,21 +265,14 @@
         var enemy_pic = new Image;
         var walkingArea = new Image;
         var brick = new Image;
-        var image = new Image();
-        var imageEnemy = new Image();
-
-        imageEnemy.src = "https://www.chronocompendium.com/images/wiki/b/bc/Bone_Knight_DS_Sprite.png";
-        image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
         walkingArea.src = "https://s-media-cache-ak0.pinimg.com/736x/90/fc/e6/90fce6e9c6bd9581c6e10b5e1e75705f.jpg ";
         coin.src = "http://www.clker.com/cliparts/y/v/9/N/0/x/treasure-chest-hi.png";
         player_Pic.src = "https://themovieuniverse.files.wordpress.com/2012/04/wall-e.png";
         powerUpPic.src = "https://previews.123rf.com/images/lineartestpilot/lineartestpilot1410/lineartestpilot141004558/32623054-cartoon-fizzy-drink-Stock-Photo.jpg";
         faster.src = "https://t7.rbxcdn.com/bd821fbe293d415cbd3520697f835735";
         enemy_pic.src = "https://s3.amazonaws.com/gameartpartnersimagehost/wp-content/uploads/2016/10/Fatty-Slug-Bug-featured.png";
-        
         var shootingSound;
         var celebrationSound;
-        var playerDead = false;
 
 
 
@@ -298,12 +286,12 @@
           this.play = function(){
 
             this.sound.play();
-             }
+            }
           this.stop = function(){
 
             this.sound.pause();
-             }
-           }
+            }
+          }
 
 
           
@@ -371,18 +359,18 @@
 
         }
 
-        function Character(){//class that gives all the information about the character or player's movement and position
+          function Character(){//class that gives all the information about the character or player's movement and position
               this.tileFrom = [1,1];//position of the tile the character is moving from
               this.tileTo = [1,1];//position of the tile it is moving to
               this.timeMoved = 0; //time since it started moving
               this.dimension = [32,32];//dimension of the character 
               this.position = [45,45];//absolute position of the character
-              this.delay = 700; //700ms delay
+              this.delay = 400; //700ms delay
           }
 
        
 
-          Character.prototype.placeAt = function(x,y)
+            Character.prototype.placeAt = function(x,y)
             {//method to place the function to x,y position
               this.tileFrom = [x,y];
               this.tileTo = [x,y];
@@ -390,7 +378,7 @@
               this.position[1] = y*tileH + ((tileH-this.dimension[1])/2);
             };
 
-          Character.prototype.processMovement = function(t)
+            Character.prototype.processMovement = function(t)
             {
               if(this.tileFrom[0]==this.tileTo[0] && this.tileFrom[1]==this.tileTo[1]){   
                                                                 //since the character has already moved to it's destination file 
@@ -423,8 +411,8 @@
 
             }
 
-        //to create a constructor for a character bullet that can be fired by the player
-        function characterBullet(x,y,width,height,velocityX){
+
+            function characterBullet(x,y,width,height,velocityX){
 
               this.x = x;
               this.y = y;
@@ -434,8 +422,8 @@
 
             }
 
-         //to have a constructor that can draw a bullet given the viewport offSets
-          characterBullet.prototype.draw = function(px,py){
+
+            characterBullet.prototype.draw = function(px,py){
 
               ctx.fillStyle = "0ed00e";
               ctx.fillRect(this.x+px,this.y+py,this.width,this.height);
@@ -443,39 +431,33 @@
               
             }
 
-/*          To have another constructor to shoot the bullet
-            Depending on the direction of the player to change the velocity sign                                         */
+            characterBullet.prototype.shoot = function(px,py){
 
-          characterBullet.prototype.shoot = function(px,py){
-
-              if(directionBullet==2&&this.x==player.position[0]){
-
-                this.velocityX = 5;
+              if(direction==3&&this.x==player.position[0]){//shoot to the right
+                this.velocityX = this.velocityX;
               }
 
-              else if(directionBullet==3&&this.x==player.position[0]){
-                this.velocityX = -5;
+              else if(direction==2&&this.x==player.position[1]){
+                this.velocityX = -this.velocityX;
               }
-              console.log(this.velocityX);
+              //console.log(this.x);
               this.x += this.velocityX;
               this.draw(px,py);
             }
 
-          var playerBullet = new characterBullet(player.position[0],player.position[1],17,6,5);
+             var playerBullet = new characterBullet(player.position[0],player.position[1],19,7,4.5);
 
-          function toIndex(x,y){
-          
+            function toIndex(x,y){
               return (x+(y*mapW));
             }
 
 
                eneX = 220; 
                eneY = 300;
-               eneV = 2.5;
-
+               eneV = 3;
                for(j = 0;j<3;j++){
-                enemies[j] = new enemy(eneX,eneY,40,40,eneV,0,true);
-                bulletEnemy[j] = new enemyBullet(eneX+12,eneY+12,15,2.5,eneV,0);
+                enemies[j] = new enemy(eneX,eneY,30,30,eneV,0,true);
+                bulletEnemy[j] = new enemyBullet(eneX,eneY,15,5,eneV,0);
                 eneX+= 130;
                 eneY+= 205;
                }
@@ -503,8 +485,8 @@
                    
                    if(statusEnemies){
                    ctx.fillStyle = "34e00f";
-                   //ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
-                   ctx.drawImage(imageEnemy,widthEnemy*directionEnemy, heightEnemy*currentFrameEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
+                  // ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
+                  ctx.drawImage(imageEnemy,widthEnemy*directionEnemy, heightEnemy*currentFrameEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
                 }
                  
                 };
@@ -512,18 +494,10 @@
             enemy.prototype.move = function(ox,oy,k,statusEnemies){
                   if(this.x+this.velocityX>335){
                      this.velocityX = -3;
-                      if(enemies[k].x==bulletEnemy[k].x){
-                      bulletEnemy[k].velocityX = 4;
-                       }
-                     directionEnemy = 0;
 
                     }
                     else if(this.x+this.velocityX<100){
                      this.velocityX = 3;
-                     if(this.x==bulletEnemy[k].x){
-                        bulletEnemy[k].velocityX = -4;
-                      }
-                     directionEnemy = 3;
                     }
 
                     if(currentFrameEnemy == framesEnemy){
@@ -534,37 +508,33 @@
                       currentFrameEnemy++;
                     }
 
-                    /* if(this.y+this.velocityY>500){
+                /*    if(this.y+this.velocityY>500){
                       this.velocityY = -3;
 
-                     }
+                    }
                     else if(this.y+this.velocityY<150){
                       this.velocityY = 3;
-                     } */
+                    }*/
                     this.x += this.velocityX;
               
                    this.draw(ox,oy,k,statusEnemies);
                 };
 
 
-            /*enemy.prototype.moveY = function(ox,oy){
+            enemy.prototype.moveY = function(ox,oy){
                   this.y += this.velocityY;
                   if(this.y+this.velocityY>500){
-
                     this.velocityY = -3;
                     directionEnemy = 1;
-                  
                   }
                   else if(this.y+this.velocityY<100){
-
                     this.velocityY = 3;
                     directionEnemy = 3;
-                  
                   }
 
-                    this.draw(ox,oy);
+                  this.draw(ox,oy);
 
-                }*/
+                }
 
             function enemyBullet(x,y,width,height,velocityX,status){
                   this.x = x;
@@ -666,7 +636,7 @@
 
             function playerEnergy(){
                   if(energyLevel<0){
-
+                  //  alert("you are dead so restart the game");
                     clearInterval(game[i]);
                     i = 0;
                     levelStatus = 0;
@@ -716,12 +686,6 @@
                      if(e.keyCode>=37&&e.keyCode<=40){
 
                          keysDown[e.keyCode] = true;
-                         if(e.keyCode==37){
-                          directionBullet = 3;
-                         }
-                         else if(e.keyCode == 39){
-                          directionBullet = 2;
-                         }
                          currentFrame++;
                          if(currentFrame==frames){
                           currentFrame=0;
@@ -752,10 +716,8 @@
          
 
              level.prototype.clock = function (duration, display,i) {
-
-                 var timer = duration, minutes, seconds;
-
-                 clearInterval(game);
+             var timer = duration, minutes, seconds;
+             clearInterval(game);
 
 
                     function  timerDisplay() {
@@ -838,7 +800,7 @@
 
                     if(keysDown[37]&&player.tileFrom[0]>0){
 
-                       direction = 2;
+                        direction = 2;
                       if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==1){
                           player.tileTo[0] -= 1;
                             }
@@ -879,7 +841,7 @@
                                         
                   //to move up
                 else if(keysDown[38]&&player.tileFrom[1]>0){
-                       direction = 1;
+                 direction = 1;
                       if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==1){
                           player.tileTo[1] -= 1;
                             }
@@ -919,7 +881,7 @@
 
       
                 else if(keysDown[39]&&player.tileFrom[0]<(mapW-1)){
-                          direction = 3;
+                  direction = 3;
 
                          if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==1){
                               player.tileTo[0] += 1;//to move to the right
@@ -1044,7 +1006,8 @@
 
                    case 6:                     
                      ctx.fillStyle = "#0000ff";                    
-                     ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);              
+                     ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                //     console.log(x*tileW+viewport.offSet[0]+" "+y*tileH+viewport.offSet[1]);
                     break;
 
                    case 8:
@@ -1110,11 +1073,6 @@
               ctx.fillStyle = "#ff0000";
               ctx.fillText("Energy: " + energyLevel + "%", 10, 40);
 
-            /*  if(playerDead){
-                ctx.fillStyle = "#ff0000";
-                ctx.fillText("You are dead", 10, 50);
-              }*/
-
               ctx.fillStyle = "34e00f";
             //  ctx.fillRect(enemy.x+viewport.offSet[0],enemy.y+viewport.offSet[1],enemy.width,enemy.height);                   
             //enemy.draw();
@@ -1169,16 +1127,14 @@
       
          function updateLevel(){
 
-              //playerDead = false;
              if(levelStatus==i+1){
               i++;
-              celebrationSound.play();
-
               for(var m = 0;m<i;m++){
                  enemies[m].status = true;
                  bulletEnemy[m].status = true;
                 }
-           
+              celebrationSound.play();
+
               /*if(i==1){
               enemys.width = 30, enemy.height = 30, enemyBullets.width = 15,enemyBullets.height = 5;
               enemys.x += 100;
@@ -1209,7 +1165,7 @@
               mapH = plan[i].mapH;
               player.delay = 700;
             
-              player.placeAt(5,5);
+              player.placeAt(1,1);
          
                   
               
@@ -1233,7 +1189,7 @@
                bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
                enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
           
-              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0]+15,player.dimension[1]+15,k);
+              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
               playerEnergy();
         
               colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
@@ -1282,15 +1238,17 @@
                  
                 canvas = document.getElementById("canvas");
                 ctx = canvas.getContext("2d");
-
+                image = new Image();
+                var imageEnemy = new Image();
+                imageEnemy.src = "https://www.chronocompendium.com/images/wiki/2/27/Free_Lancer_Sprites.png";
                 var direction = 0, directionEnemy = 0;
                 var currentFrameEnemy = 0, framesEnemy = 5,widthEnemy = 40, heightEnemy = 40;
-                
+                image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
          
                 function drawSprite(){
                 ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
-                //ctx.clearRect(enemies[k].x,enemies[k].y,enemies.width,enemies.height);
-                ctx.drawImage(image, width*currentFrame +20 , height * direction +7, width, height, player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1] , player.dimension[0]+15,player.dimension[1]+15);
+               // ctx.clearRect(enemies[k].x,enemies[k].y,enemies.width,enemies.height);
+                ctx.drawImage(image, width*currentFrame +20 , height * direction +7, width, height, player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1] , player.dimension[0],player.dimension[1]);
 
                 //ctx.drawImage(imageEnemy,widthEnemy*directionEnemy,heightEnemy*currentFrameEnemy,widthEnemy,heightEnemy,enemies[i].x+viewport.offSet[0],enemies[i].y+viewport.offSet[1],enemies[i].width,enemies.height);
             
