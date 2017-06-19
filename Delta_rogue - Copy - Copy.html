@@ -3,17 +3,43 @@
     <title>Game-for delta</title>
     <style type="text/css">
        canvas{
-        padding: 50px 50px 50px 50px;
+        padding: 50px 250px 50px 350px;
+       }
+
+       body{
+        background: url("http://www.hydro-games.com/files/DK/Level_test.jpg");
+       }
+       ul{
+        margin:  50px 250px 50px 350px;
+        border: 3px solid white;
+        color:  white;
+       }
+       #display{
+        font-size: 20px;
+        color: #ff0000;
+       }
+       #heading{
+        color: #00ff00;
+        padding-left: 400px;
+        font-size: 35px;
        }
     </style>
    </head>
    <body>
+
        <div id = "instruction">
+        <div id = "heading">DUNGEON CRAWLER GAME</div>
          <ul>
            <li>Press the space bar to start the game</li>
-           <li>You have 90 seconds to reach the checkpoint</li>
+           <li>You have 60 seconds to reach the first checkpoint</li>
+           <li>You have 3 floors and each floor has a time duration within which you have to complete the maze</li>
+           <li>If you get killed by enemies you restart the game</li>
+           <li>Don't forget to collect the treasures on your way</li>
+           <li>Good luck !!</li>
+
          </ul>
-       </div>
+       
+      </div>
        <canvas id = "canvas" height = "400" width = "400"></canvas>
        <div id = "time"></div>
 
@@ -87,10 +113,10 @@
 
         //now we generate a random matrix inside this (n-2)*(n-2) array
 
-        else if(random<0.65){
+        else if(random<0.75){
           array[j][i] = 1;
         }
-        else if(random>0.65&&random<0.85){
+        else if(random>0.75&&random<0.85){
           array[j][i] = 0;
         }
         else if(random>0.90&&random<0.94){
@@ -114,7 +140,7 @@
           array[j][i] = 0;
           if(random>=0.51&&i%13==0  && exit<=2&&i!=0){
             array[j][i] =  3;
-            array[j][i-1] = 1;
+          //  array[j][i-1] = 1;
             exit++;
           }
           
@@ -124,7 +150,7 @@
           if(random<0.51&&i%13==0 && exit<=2&&i!=0){
             array[j][i] = 3;
             exit++;
-            array[j][i-1] = 1;
+         //   array[j][i-1] = 1;
           }
           
         }
@@ -141,14 +167,14 @@
     
         }
           
-        // var  Map0 = array[0];
+         var  Map0 = array[0];
          var Map1 = array[1];
         var Map2 = array[2];
 
 
 
 
-      var Map1 = [
+      /*var Map1 = [
   4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 0,
   0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 8, 1, 1, 0, 1, 0, 1, 0, 0, 0,
@@ -198,7 +224,7 @@
   0, 1, 0, 6, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0,
   3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-];
+];*/
 
         var tileH = 40;//tile height and width set to 40px
         var tileW = 40;
@@ -231,6 +257,7 @@
         var current_map = [];
          current_map = "Map"+n;
          var coinCollected = 0;
+         var scoreFinal = 0;;
        
          
         var energyLevel = 200;
@@ -274,7 +301,8 @@
         var image = new Image();
         var imageEnemy = new Image();
 
-        imageEnemy.src = "https://www.chronocompendium.com/images/wiki/b/bc/Bone_Knight_DS_Sprite.png";
+       // imageEnemy.src = "https://www.chronocompendium.com/images/wiki/b/bc/Bone_Knight_DS_Sprite.png";
+       imageEnemy.src = "https://www.programmingmind.com/assets/phaser/topdown/nazi-walk.png"
         image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
         walkingArea.src = "https://s-media-cache-ak0.pinimg.com/736x/90/fc/e6/90fce6e9c6bd9581c6e10b5e1e75705f.jpg ";
         coin.src = "http://www.clker.com/cliparts/y/v/9/N/0/x/treasure-chest-hi.png";
@@ -476,7 +504,7 @@
 
                for(j = 0;j<3;j++){
                 enemies[j] = new enemy(eneX,eneY,40,40,eneV,0,true);
-                bulletEnemy[j] = new enemyBullet(eneX+12,eneY+12,15,2.5,eneV,0,true);
+                bulletEnemy[j] = new enemyBullet(eneX+12,eneY+12,15,4,eneV,0,true);
                 eneX+= 130;
                 eneY+= 205;
                }
@@ -499,8 +527,8 @@
                    if(statusEnemies){
                    ctx.fillStyle = "34e00f";
                    ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
-                   //ctx.drawImage(imageEnemy,widthEnemy*directionEnemy, heightEnemy*currentFrameEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
-                }
+                   //ctx.drawImage(imageEnemy,widthEnemy*currentFrameEnemy, heightEnemy*directionEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
+                  }
                  
                 };
 
@@ -510,7 +538,7 @@
                       if(enemies[k].x==bulletEnemy[k].x){
                       bulletEnemy[k].velocityX = eneV;
                        }
-                     directionEnemy = 0;
+                     directionEnemy = 2;
 
                     }
                     else if(this.x+this.velocityX<100){
@@ -634,6 +662,13 @@
 
                   }
                 }
+
+           function gameOver(){
+             scoreFinal = coinCollected*50 + playerEnergy* 70;
+             alert("You have scored " + scoreFinal + " points");
+
+           }     
+
                   
                     
 
@@ -949,7 +984,8 @@
                                    gameMap[toIndex(player.tileTo[0],player.tileTo[1]+1)]=1;
                                    player.tileTo[1]+= 1;
             
-                              }            
+                              } 
+
                    
                    }
 
@@ -1121,53 +1157,43 @@
                  bulletEnemy[m].status = true;
                  bulletEnemy[m].velocityX -= 1;
                 }
-           
-              /*if(i==1){
-              enemys.width = 30, enemy.height = 30, enemyBullets.width = 15,enemyBullets.height = 5;
-              enemys.x += 100;
-              enemys.y += 40;
-              enemyBullets.x += 100;
-              enemyBullets.y += 40
-               }
-               else if(i==2){
+                if(i==3){
+    
+                cancelAnimationFrame(gamePlay);
+                gameOver();
 
-                enemys.x += 390;
-                enemys.y += 240;
-                enemyBullets.x += 390;
-                enemyBullets.y += 240;
-                enemys.width = 30, enemy.height = 30, enemyBullets.width = 15,enemyBullets.height = 5;
-
-               }*/
-               if(i==3){
-                alert("You've won");
                }
 
-              clearInterval(game[i]);
-                }  
+                clearInterval(game[i]);
 
-              brick.src = plan[i].wallPicture; 
-              fiveMinutes = plan[i].gameTime;
-              gameMap = plan[i].layout;
-              mapW = plan[i].mapW;
-              mapH = plan[i].mapH;
-              player.delay = 700;
+
+              }
+
+              
+
+                brick.src = plan[i].wallPicture; 
+                fiveMinutes = plan[i].gameTime;
+                gameMap = plan[i].layout;
+                mapW = plan[i].mapW;
+                mapH = plan[i].mapH;
+                player.delay = 700;
             
-              player.placeAt(2,2);
-               framesLastSecond = 0;
-              frameCount = 0;
-              currentFrameTime = 0;
-              timeElapsed = 0;
+                player.placeAt(10,10);
+                framesLastSecond = 0;
+                frameCount = 0;
+                currentFrameTime = 0;
+                timeElapsed = 0;
          
                   
               
               //player.position = [350,350];
          
-              plan[i].clock(fiveMinutes, display,i);
-              display = document.querySelector('#time');
-              energyLevel  =100;
-              gamePlay = requestAnimationFrame(function(){
-              drawGame();
-              drawSprite();
+                 plan[i].clock(fiveMinutes, display,i);
+                 display = document.querySelector('#time');
+                 energyLevel  =100;
+                 gamePlay = requestAnimationFrame(function(){
+                 drawGame();
+                 drawSprite();
 
                  //enemyBullets.x = enemy.x;
               //enemies[i].move(viewport.offSet[0],viewport.offSet[1]);
@@ -1176,42 +1202,20 @@
               //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);
 
 
-              for(k=0;k<=i;k++){
-               bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
-               enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
+                 for(k=0;k<=i;k++){
+                 bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
+                 enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
           
-              colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0]+15,player.dimension[1]+15,k);
-              playerEnergy();
+                 colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0]+15,player.dimension[1]+15,k);
+                 playerEnergy();
         
-              colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
-              colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height,k);
-              playerEnergy();
+                 colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
+                 colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height,k);
+                  playerEnergy();
             }
                  
-                 //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
-            
-              /*colliosionEnemy(enemys.x,enemys.y,enemys.width,enemys.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-                  
-                
-              colliosionBullet(enemyBullets.x,enemyBullets.y,enemyBullets.width,enemyBullets.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-              colliosionPlayer(enemys.x,enemys.y,enemys.width,enemys.height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height);
-                  
-              playerEnergy();
-                  if(i==2){
-                        enemyBulletFinal.moveB(viewport.offSet[0],viewport.offSet[1]);
-                        enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
-                        colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
-                        colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-
-                        enemyV.moveY(viewport.offSet[0],viewport.offSet[1]);
-                        enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);
-
-                       /* enemyBulletVertical.moveB(viewport.offSet[0],viewport.offSet[1]);
-                        enemyVertical.move(viewport.offSet[0],viewport.offSet[1]);
-                        colliosionBullet(enemyBulletVertical.x,enemyBulletVertical.y,enemyBulletVertical.width,enemyBulletVertical.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
-                        colliosionEnemy(enemyVertical.x,enemyVertical.y,enemyVertical.width,enemyVertical.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-                        }}*/
-                      
+                 
+                       
 
               });
           
@@ -1231,7 +1235,8 @@
                 ctx = canvas.getContext("2d");
 
                 var direction = 0, directionEnemy = 0;
-                var currentFrameEnemy = 0, framesEnemy = 5,widthEnemy = 40, heightEnemy = 40;
+                var currentFrameEnemy = 0, framesEnemy = 7,widthEnemy = 120, heightEnemy = 120;
+                //older one was 40 40
                 
          
                 function drawSprite(){
