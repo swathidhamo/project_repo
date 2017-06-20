@@ -1,33 +1,7 @@
 <html>
    <head>
-    <title>Game-for delta</title>
-    <style type="text/css">
-       canvas{
-        padding: 50px 250px 50px 250px;
-       }
-
-       body{
-        background: url("http://www.hydro-games.com/files/DK/Level_test.jpg");
-       }
-       ul{
-        margin:  50px 250px 50px 250px;
-        border: 3px solid white;
-        color:  white;
-       }
-       #time{
-        font-size: 20px;
-        color: #ff0000;
-       }
-       #heading{
-        color: #00ff00;
-        padding-left: 400px;
-        font-size: 35px;
-       }
-       #mute{
-        
-        background-color:  red;
-       }
-    </style>
+    <title>DUNGEON-CRAWLER GAME</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
    </head>
    <body>
 
@@ -48,7 +22,8 @@
        <div id = "time"></div>
        <button id = "mute">Mute</button>
 
-   <script type="text/javascript">
+       <script type="text/javascript" href = "enemies.js"></script>
+       <script type="text/javascript">
         
 
         var canvas = document.getElementById("canvas");
@@ -71,7 +46,7 @@
   0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];
 
- var random = Math.random();
+      var random = Math.random();
       /*all the 0 and multiples of n of the n*n array as well as the value of 0 to n-1 as well as (n*n)-(n) = n(n-1) to n*n - 1
         will all have 0
        */
@@ -88,7 +63,7 @@
       
        var random_e = Math.random();
        var exit = 0;
-       var th = 0;
+    
     
 
 
@@ -103,11 +78,11 @@
 
         if(i>=0&&i<=n-1){
           array[j][i] = 0;
-         if(i==0||i==1){
+          if(i==0||i==1){
           array[j][i] = 4;
-         }
+           }
 
-        }
+         }
       
 
         else if( i>=((n-1)*n) &&(i<n*n) ){
@@ -118,10 +93,10 @@
 
         //now we generate a random matrix inside this (n-2)*(n-2) array
 
-        else if(random<0.75){
+        else if(random<0.65){
           array[j][i] = 1;
         }
-        else if(random>0.75&&random<0.85){
+        else if(random>0.70&&random<0.85){
           array[j][i] = 0;
         }
         else if(random>0.90&&random<0.94){
@@ -144,11 +119,7 @@
         
         else if((i+1)%n==0){
           array[j][i] = 0;
-        /*  if(random<0.51&&i%13==0 && exit<=2&&i!=0){
-            array[j][i] = 3;
-            exit++;
-         //   array[j][i-1] = 1;
-          }*/
+        
           
         }
          else if(i%n==0){
@@ -161,13 +132,10 @@
           else if( i == ((n*n))-n-n-1 ){
             array[j][i] = 1;
           }
-          else {array[j][i] = 0;}
+          else {
+            array[j][i] = 0;
+          }
 
-          /*if(random>=0.51&&i%13==0  && exit<=2&&i!=0){
-            array[j][i] =  3;
-          //  array[j][i-1] = 1;
-            exit++;
-          }*/
           
         }
           if(i == (n*n)-(n-1) ) {
@@ -180,16 +148,8 @@
           if(i== (n*n)-(2*n -1)){
             array[j][i] = 1;
           }
-
-
-
-
-
-    
-        /*if(i==(n+1)||i==(n+2) ){
-          array[j][i] = 1;
-        }
-*/
+          array[j][( (n*n)-(3*n -1) )] = 1;
+          array[j][((n*n)-(2*n -2))] = 1;
 
           }
     
@@ -197,7 +157,7 @@
           
          var  Map0 = array[0];
          var Map1 = array[1];
-        var Map2 = array[2];
+         var Map2 = array[2];
 
 
 
@@ -289,26 +249,20 @@
        
          
         var energyLevel = 200;
-        var steps = 0;
-        var exitX, exitY;
         
+               
        
         
         var enemyInitialize = 0;
 
-        var treasures = new Array();
+
         var enemies = new Array();
         var bulletEnemy = new Array();
         var plan = new Array();
         var layouts = [Map0,Map1,Map2];
-        var game = new Array();
-        var timers = new Array();
+        var game = new Array;
 
-        var alive = true;
-        var offX,offY;
-        var enemies;
         var de = 1;
-        var pos_1, pos_2, temp;
         var ex = 10;
         var player_status = true;
         
@@ -330,7 +284,7 @@
         var imageEnemy = new Image();
 
        // imageEnemy.src = "https://www.chronocompendium.com/images/wiki/b/bc/Bone_Knight_DS_Sprite.png";
-       imageEnemy.src = "https://www.programmingmind.com/assets/phaser/topdown/nazi-walk.png"
+        imageEnemy.src = "https://www.programmingmind.com/assets/phaser/topdown/nazi-walk.png"
         image.src = "http://gamefroot.com/wp-content/files/2012/10/player-topdown.png";
         walkingArea.src = "https://s-media-cache-ak0.pinimg.com/736x/90/fc/e6/90fce6e9c6bd9581c6e10b5e1e75705f.jpg ";
         coin.src = "http://www.clker.com/cliparts/y/v/9/N/0/x/treasure-chest-hi.png";
@@ -342,9 +296,12 @@
         var shootingSound;
         var celebrationSound;
         var backgroundSound;
+        var enemyShotSound;
         var playerDead = false;
         var shootSoundStatus = true;
         var celebrationSoundStatus = true;
+        var enemyShotStatus = true; 
+        var backgroundSoundStatus= true;
 
 
 
@@ -370,6 +327,7 @@
            shootingSound = new sound("Gun+Silencer.mp3");
            celebrationSound = new sound("celebration.wav");
            backgroundSound = new sound("background_music.mp3");
+           enemyShotSound = new sound("EnemyKilled.wav");
 
 
 
@@ -378,7 +336,7 @@
            this.height = n*5 + 15;
            this.width = n*5 + 15;
            this.index = n;
-           this.gameTime = 60 + (n*60);
+           this.gameTime = 45 + (n*30);
            this.wallPicture = wallPicture[n];
            this.mapH = n*5 + 15;
            this.mapW = n*5 + 15;
@@ -529,17 +487,20 @@
               return (x+(y*mapW));
             }
 
-
                eneX = 220; 
                eneY = 300;
                eneV = 2.5;
+               //to create an array containg instances of the enemy and enemy bullet objects, depending on the level there will be one, two and three enemies respectively
 
                for(j = 0;j<3;j++){
-                enemies[j] = new enemy(eneX,eneY,40,40,eneV,0,true);
+                enemies[j] = new enemy(eneX,eneY,35,35,eneV,0,true);
                 bulletEnemy[j] = new enemyBullet(eneX+12,eneY+12,15,4,eneV,0,true);
                 eneX+= 130;
                 eneY+= 205;
                }
+
+
+           
           
 
             function enemy(x,y,width,height,velocityX,velocityY,status){
@@ -558,7 +519,7 @@
                    
                    if(statusEnemies){
                    ctx.fillStyle = "34e00f";
-                   ctx.fillRect(this.x+ox,this.y+oy,this.width,this.height);  
+                   ctx.drawImage(player_Pic,this.x+ox,this.y+oy,this.width,this.height);
                    //ctx.drawImage(imageEnemy,widthEnemy*currentFrameEnemy, heightEnemy*directionEnemy ,widthEnemy,heightEnemy,enemies[k].x+ox,enemies[k].y+oy ,enemies[k].width,enemies[k].height);
                   }
                  
@@ -581,21 +542,6 @@
                      directionEnemy = 3;
                     }
 
-                    if(currentFrameEnemy == framesEnemy){
-                      currentFrameEnemy = 0;
-
-                    }
-                    else{
-                      currentFrameEnemy++;
-                    }
-
-                    /* if(this.y+this.velocityY>500){
-                      this.velocityY = -3;
-
-                     }
-                    else if(this.y+this.velocityY<150){
-                      this.velocityY = 3;
-                     } */
                     this.x += this.velocityX;
               
                    this.draw(ox,oy,k,statusEnemies);
@@ -615,35 +561,30 @@
             enemyBullet.prototype.drawB = function(bx,by,statusBullet){
 
                   if(statusBullet){
-                  ctx.fillStyle = "0ed00e";
+                  ctx.fillStyle = "#0000ff";
                   ctx.fillRect(this.x+bx,this.y+by,this.width,this.height);
                   ctx.fill();
                   }
                     
                 };
 
-            enemyBullet.prototype.moveB = function(bx,by,statusBullet){
+            enemyBullet.prototype.moveB = function(bx,by,statusBullet,k){
                    if(this.x-this.velocityX<35){
-                     this.x = enemies[i].x;
+                     this.x = enemies[k].x;
                      player_status = true;
                   }
 
-                 /* if(this.y+this.velocityY>400){
-                    this.y = enemy.y ;
-                    player_status = true;
-                  }*/
-
-
-                  // this.x = enemy.x;
-                   this.x -= this.velocityX;
-                 //  this.y += this.velocityY;
+                   this.x -= this.velocityx;
                    this.drawB(bx,by,statusBullet);
                   
 
                 };
+
+
+            
       
 
-            function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2,k){
+            function colliosionBullet(x1,y1,w1,h1,x2,y2,w2,h2,k){//for checking colliosion between the player and the enemy's bullet
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_status&&bulletEnemy[k].status){
                     energyLevel -= Math.round(100/3);
@@ -654,7 +595,7 @@
           
                  }
 
-            function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2,k){
+            function colliosionEnemy(x1,y1,w1,h1,x2,y2,w2,h2,k){//to check for colliosion between the enemy and the player
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy&&enemies[k].status){
                     energyLevel -= Math.round(100/6);
@@ -666,38 +607,36 @@
           
                  }
 
-            function colliosionPlayer(x1,y1,w1,h1,x2,y2,w2,h2,k){
+            function colliosionPlayer(x1,y1,w1,h1,x2,y2,w2,h2,k){//to check if the player's bullet has shot the enemy
                  
                   if((x1<x2+w2)&&(x1+w1>x2)&&(y1<y2+h2)&&(y1+h1>y2)&&player_enemy){
                     energyLevel += Math.round(100/6);
-                  //  console.log("youve killed him!!");
-                    enemies[k].status = false;
+                    enemies[k].status = false;//once the enemy has been shot the status of the enemy and the bullet is set to false so as to not draw the bullet in the further level
                     bulletEnemy[k].status = false;
-
-                    
-    
-                    
+                    if(enemyShotStatus){
+                      enemyShotSound.play();
+                    }                 
                   }
           
                  }
 
 
 
-            function playerEnergy(){
-                  if(energyLevel<0){
+            function playerEnergy(){//to check if the player's energy has reached 0 yet
+                if(energyLevel<0){
 
                     clearInterval(game[i]);
 
-                    i = 0;
+                     i = 0;                      //to reset the game once the player energy reaches 0
                     levelStatus = 0;
                     updateLevel();
 
                   }
                 }
 
-           function gameOver(){
-             scoreFinal = coinCollected*50 + energyLevel* 70;
-             alert("You have scored " + scoreFinal + " points");
+            function gameOver(){
+               scoreFinal = coinCollected*50 + energyLevel* 70;//to calculate the score when the game is over
+               alert("You have scored " + scoreFinal + " points");
 
            }     
 
@@ -753,13 +692,11 @@
                          if(currentFrame==frames){
                           currentFrame=0;
                          }
-                         steps++;
-                        //   energyLevel -= Math.round(Math.sqrt((Math.log(steps))));
                       }
+
                       if(e.keyCode==32&&status==0){
                          spaceBarPressed = true;
                          display = document.querySelector('#time');
-                         //gamePlay = requestAnimationFrame(drawGame);
                          updateLevel();       
                          var info = document.getElementById("instruction");
                          info.style.display = "none";                 
@@ -774,11 +711,11 @@
 
           
 
-                  viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];
+                  viewport.screen = [document.getElementById("canvas").width,document.getElementById("canvas").height];//to set the viewport dimensions once the page is loaded
         };  
          
 
-             level.prototype.clock = function (duration, display,i) {
+             level.prototype.clock = function (duration, display,i) {//to have the count down timer for each level
 
                  var timer = duration, minutes, seconds;
 
@@ -863,42 +800,41 @@
                 // *We check for 3 conditions before moving the character to a tile
                 //* if the right key is pressed, if it's position is not out of bounds and if the new position is ascessable 
 
-                    if(keysDown[37]&&player.tileFrom[0]>0){
+                    if(keysDown[37]&&player.tileFrom[0]>0){   //to move to the left
 
                        direction = 2;
                       if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]!=0){
                           player.tileTo[0] -= 1;
                             
-                  //to move to the left
+               
 
-                       if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==3){
-                       // player.tileTo[0] -= 1;
+                       if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==3){//to check if the the next level exit has been reached
+                 
                         levelStatus++; 
                         timer = 0;
                         updateLevel();                                      
-                            }//to check if the the next level exit has been reached
+                            }
 
-                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==6){
+                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==6){//to collect the coins and remove them once collected
                         coinCollected++;
-                       // player.tileTo[0] -= 1;
                         gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
-                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){
+                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==8){//to make the player move faster by decreasing the delay
                     
-                         player.delay -= 350;
+                         player.delay -= 250;
                          gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                        // player.tileTo[0] -= 1;
+                      
                     
                           }        
-                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==9){
-                          energyLevel;
-                          //player.tileTo[0] -= 1;
+                      else if(gameMap[toIndex(player.tileFrom[0]-1,player.tileFrom[1])]==9){//to collect the energy boosters
+                          
+                          energyLevel += 100;
                           gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
      
-                        }//CHANGED HERE
+                        }
                                       
                       }         
 
@@ -906,22 +842,19 @@
                                         
                   //to move up
                 else if(keysDown[38]&&player.tileFrom[1]>0){
-                       direction = 1;
+                       direction = 1;//to set the column for the sprite
                       if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]!=0){
                           player.tileTo[1] -= 1;
                             
                        if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==8){
 
-                          player.delay -= 350;
-                          energyLevel += 100;
-                         // player.tileTo[1] -= 1;
+                          player.delay -= 250;
                           gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
                 
 
                       }        
 
-                       else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==3){
-                           // player.tileTo[1] -= 1;          
+                       else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==3){      
                             levelStatus++;
                             timer = 0;
                             updateLevel();
@@ -930,15 +863,15 @@
           
                              coinCollected++;
                              gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                            // player.tileTo[1] -= 1;
+            
                       
                             }
 
                         else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]-1)]==9){
           
-                              energyLevel = 100;
+                              energyLevel += 100;
                               gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                            //  player.tileTo[1] -= 1;
+                
                       
                            }  
                          }
@@ -946,51 +879,51 @@
                   }
 
       
-                else if(keysDown[39]&&player.tileFrom[0]<(mapW-1)){
+                else if(keysDown[39]&&player.tileFrom[0]<(mapW-1)){//to move to the right
                           direction = 3;
 
                          if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]!=0){
-                              player.tileTo[0] += 1;//to move to the right
+                              player.tileTo[0] += 1;
                             
 
                           if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==3){
-                              // player.tileTo[0] += 1;
+        
                                levelStatus++;
                                timer = 0;
                                updateLevel();
                     
                             } 
                           else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==6){
+                                
                                 coinCollected++;
-                               // player.tileTo[0] += 1;
                                 gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
                             }    
 
                           else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==8){
-                                energyLevel += 100;
-                                player.delay -= 350;
+    
+                                player.delay -= 250;
                                 gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                               // player.tileTo[0] += 1;
+                      
                             }    
                           else if(gameMap[toIndex(player.tileFrom[0]+1,player.tileFrom[1])]==9){
-                                energyLevel = 100;
-                               // player.tileTo[0] += 1;
+                                
+                                energyLevel += 100;
                                 gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
                             }                
                           }  
                                                   
                   }
 
-                  else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)) {
+                  else if(keysDown[40]&&player.tileFrom[1]<(mapH-1)) {// to move down
                        direction = 0;
 
                           if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]!=0){
-                                player.tileTo[1] += 1;// to move down
+                                player.tileTo[1] += 1;
 
                             
 
                             if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==3){
-                              //   player.tileTo[1] += 1;
+            
                                  levelStatus++;
                                  timer = 0;
                                  updateLevel();
@@ -999,24 +932,23 @@
                             
                             else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==6){ 
 
-                                  coinCollected++;
-                                  //player.tileTo[1] += 1;
+                                  coinCollected++;        
                                   gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
 
                             }
                              else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==8){
                   
-                                  player.delay -= 350;
+                                  player.delay -= 250;
                                   gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                                 // player.tileTo[1]+= 1;
+        
             
                              }      
 
                              else if(gameMap[toIndex(player.tileFrom[0],player.tileFrom[1]+1)]==9){
                   
-                                   energyLevel = 100;
+                                   energyLevel += 100;
                                    gameMap[toIndex(player.tileTo[0],player.tileTo[1])]=1;
-                                  // player.tileTo[1]+= 1;
+        
             
                               } 
                             }
@@ -1058,13 +990,11 @@
                    case 0:
                      ctx.drawImage(brick,viewport.offSet[0]+x*tileW,viewport.offSet[1]+ y*tileH,tileW,tileH);
                      ctx.fillStyle = "#00000b";
-                     //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
+                     
                     break;
 
                    case 3:                     
                      ctx.fillStyle = "#08af4b";
-                     exitX = x; 
-                     exitY = y; 
                      ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
 
@@ -1073,25 +1003,19 @@
                      ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                     break;
 
-                   case 6:                     
-                     ctx.fillStyle = "#0000ff";                    
+                   case 6:                                         
                      ctx.drawImage(coin,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);              
                     break;
 
-                   case 8:
-                     ctx.fillStyle = "#0e0d0ff";  
+                   case 8: 
                      ctx.drawImage(faster,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      break;
 
-                    case 9:
-                     ctx.fillStyle = "#0e0d0ff";
-                     
+                    case 9:                     
                      ctx.drawImage(powerUpPic,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      break;  
 
                     default:
-                       ctx.fillStyle = "#ffffff";
-                       //ctx.fillRect(x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                        ctx.drawImage(walkingArea,x*tileW+viewport.offSet[0],y*tileH+viewport.offSet[1],tileW,tileH);
                      
                   }
@@ -1099,44 +1023,25 @@
                   
                  }
               }
-
-              ctx.fillStyle = "#FF00ff";
-              //ctx.fillRect(player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]);
-              
-             // ctx.drawImage(player_Pic,player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1],player.dimension[0],player.dimension[1]); 
-        
             
 
-              ctx.fillStyle = "#ff0000";
+              ctx.fillStyle = "#ff0000";//to display the FPS
               ctx.fillText("FPS: " + framesLastSecond, 10, 20);
 
-              ctx.fillStyle = "#ff0000";
+              ctx.fillStyle = "#ff0000";//to display the number of coins collected so far
               ctx.fillText("Coin: " + coinCollected, 10, 30);
 
-              ctx.fillStyle = "#ff0000";
+              ctx.fillStyle = "#ff0000";//to display the energy level
               ctx.fillText("Energy: " + energyLevel + "%", 10, 40);
 
-            /*  if(playerDead){
-                ctx.fillStyle = "#ff0000";
-                ctx.fillText("You are dead", 10, 50);
-              }*/
-
-              ctx.fillStyle = "34e00f";
-            //  ctx.fillRect(enemy.x+viewport.offSet[0],enemy.y+viewport.offSet[1],enemy.width,enemy.height);                   
-            //enemy.draw();
-            
+                    
               gamePlay =  requestAnimationFrame(function(){
               drawGame();
               drawSprite();
-           //enemyBullets.x  = enemys.x;
-           //enemies[i].move(viewport.offSet[0],viewport.offSet[1]);
               playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
-            //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);           
-            //enemys.draw(viewport.offSet[0],viewport.offSet[1]);
-            //CHANGED HERE TOOOO
-          
+              
               for(k=0;k<=i;k++){
-                bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
+                bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status,k); 
                enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
 
           
@@ -1147,22 +1052,7 @@
                colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x+10,playerBullet.y+15,playerBullet.width,playerBullet.height,k);
                playerEnergy();
              }
-       ///THIS PART TOO
-          /* if(i==2){
-           enemyBulletFinal.moveB(viewport.offSet[0],viewport.offSet[1]);
-           enemyFinal.move(viewport.offSet[0],viewport.offSet[1]);
-           colliosionBullet(enemyBulletFinal.x,enemyBulletFinal.y,enemyBulletFinal.width,enemyBulletFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);     
-           colliosionEnemy(enemyFinal.x,enemyFinal.y,enemyFinal.width,enemyFinal.height,player.position[0],player.position[1],player.dimension[0],player.dimension[1]);
-           enemyV.moveY(viewport.offSet[0],viewport.offSet[1]);
-           enemyBulletV.moveBVertical(viewport.offSet[0],viewport.offSet[1]);}*/
-
-
-
-           
-                 
-            
-
-           //enemyBullet.move();
+  
            });
 
 
@@ -1175,7 +1065,7 @@
       
           function updateLevel(){
 
-              //playerDead = false;
+            
              if(levelStatus==i+1){
               i++;
                  if(celebrationSoundStatus){
@@ -1191,8 +1081,9 @@
               for(var m = 0;m<i;m++){
                  enemies[m].status = true;
                  enemies[m].velocityX -= 1;
+                 //bulletEnemy[m].x = enemies[m].x + 12;
                  bulletEnemy[m].status = true;
-                 bulletEnemy[m].velocityX -= 1;
+                 //bulletEnemy[m].velocityX -= 1;
                 }
                 if(i==3){
     
@@ -1206,8 +1097,9 @@
 
               }
 
-                 
-                backgroundSound.play();
+                if(backgroundSoundStatus){
+                  backgroundSound.play();
+                }
                 brick.src = plan[i].wallPicture; 
                 fiveMinutes = plan[i].gameTime;
                 gameMap = plan[i].layout;
@@ -1223,7 +1115,7 @@
          
                   
               
-              //player.position = [350,350];
+  
          
                  plan[i].clock(fiveMinutes, display,i);
                  display = document.querySelector('#time');
@@ -1232,15 +1124,13 @@
                  drawGame();
                  drawSprite();
 
-                 //enemyBullets.x = enemy.x;
-              //enemies[i].move(viewport.offSet[0],viewport.offSet[1]);
-              playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
+                 playerBullet.shoot(viewport.offSet[0]+10,viewport.offSet[1]+15);
                  
-              //bulletEnemy[i].moveB(viewport.offSet[0],viewport.offSet[1]);
+            
 
 
                  for(k=0;k<=i;k++){
-                 bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status); 
+                 bulletEnemy[k].moveB(viewport.offSet[0],viewport.offSet[1],bulletEnemy[k].status,k); 
                  enemies[k].move(viewport.offSet[0],viewport.offSet[1],k,enemies[k].status); 
           
                  colliosionEnemy(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,player.position[0],player.position[1],player.dimension[0]+15,player.dimension[1]+15,k);
@@ -1249,6 +1139,7 @@
                  colliosionBullet(bulletEnemy[k].x,bulletEnemy[k].y,bulletEnemy[k].width,bulletEnemy[k].height,player.position[0],player.position[1],player.dimension[0],player.dimension[1],k);
                  colliosionPlayer(enemies[k].x,enemies[k].y,enemies[k].width,enemies[k].height,playerBullet.x,playerBullet.y,playerBullet.width,playerBullet.height,k);
                   playerEnergy();
+                  console.log(bulletEnemy[k].x);
             }
                  
                  
@@ -1274,37 +1165,37 @@
 
                 var direction = 0, directionEnemy = 0;
                 var currentFrameEnemy = 0, framesEnemy = 7,widthEnemy = 120, heightEnemy = 120;
-                //older one was 40 40
+          
                 
          
                 function drawSprite(){
                 ctx.clearRect(player.position[0]+viewport.offSet[0], player.position[1]+viewport.offSet[1], player.dimension[0], player.dimension[1]);
-                //ctx.clearRect(enemies[k].x,enemies[k].y,enemies.width,enemies.height);
+                
                 ctx.drawImage(image, width*currentFrame +20 , height * direction +7, width, height, player.position[0]+viewport.offSet[0],player.position[1]+viewport.offSet[1] , player.dimension[0]+15,player.dimension[1]+15);
-
-                //ctx.drawImage(imageEnemy,widthEnemy*directionEnemy,heightEnemy*currentFrameEnemy,widthEnemy,heightEnemy,enemies[i].x+viewport.offSet[0],enemies[i].y+viewport.offSet[1],enemies[i].width,enemies.height);
-            
-         
-     
-        }
+                 
+                  }
 
 
-        var mute = document.getElementById("mute");
-        mute.addEventListener = ("click",function(){
-          backgroundSound.stop();
-          celebrationSoundStatus = false;
-          shootSoundStatus = false;
-          shootingSound.stop();
-          celebrationSound.stop();
-        });
+                var mute = document.getElementById("mute");
+                mute.addEventListener("click",function(){
+                backgroundSound.stop();
+                celebrationSoundStatus = false;
+                shootSoundStatus = false;
+                enemyShotStatus = false;
+                backgroundSoundStatus = false;
 
-         mute.addEventListener = ("dblclick",function(){
-          backgroundSound.play();
-          celebrationSoundStatus = true;
-          shootSoundStatus = true;
-          //shootingSound.stop();
-          //celebrationSound.stop();
-        });
+                shootingSound.stop();
+                celebrationSound.stop();
+               });
+
+                mute.addEventListener("dblclick",function(){
+                 backgroundSound.play();
+                 celebrationSoundStatus = true;
+                 shootSoundStatus = true;
+                 enemyShotStatus = true;
+                 backgroundSoundStatus = true;
+                 
+               });
          
 
                  
